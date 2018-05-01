@@ -1,0 +1,69 @@
+# TIL   / 2018-05-02
+  ## Unity
+    ### SingleTon < C# >
+
+
+> Summary
+-  오브젝트 생성(Instantiate) 와 삭제 (Destroy) 가 잦아지면 부하의 증가로 가비지 콜렉터 호출 렉이 발생한다.
+-  그럼 미리 만들어놓고 활성, 비활성화 하여 재활용 하면, 가비지 콜렉터가 발생하지 않는다.
+-  미리 쓸만큼 만 만들어 놓고, 일정 조건(화면밖으로 나간다던지 하는,) 이 되면 비활성화 시켜놓자.
+-
+
+### C#
+> 필요로 하는것은 프리팹화 된 발사체(GameObject), 발사체를 담을 탄창(Queue , List)
+
+모든 클래스에서 사용가능하도록, static 으로 큐를 선언하거나, 싱글톤을 사용한 풀링매니저를 만들어주자.
+가능하면 풀링은 한곳에서 처리해주도록 해야 부하가 적다.
+
+
+```
+// 네이버 블로그 H_studio 의 Hyorung 글 참고.
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Pooling : MonoBehaviour {
+
+    public static Pooling current;   //모든 클래스에 접근 가능하게 해준다
+
+    public GameObject Bullet1 = null;      //  사용할 게임오브젝트
+
+    public int BulletAmount = 10;       // 원하는 갯수
+
+    public List<GameObject> BulletPool;
+
+    void awake()
+    {
+      current = this;       //static 으로 선언한  Pooling 클래스에 접근할수 있게된다.
+    }
+	  void Start ()
+    {
+      for(int i = 0; i < BulletAmount;  i++)    // Amount 의 갯수 만큼
+      {
+        var MakeBullet = Instantiate(Bullet1); // transform 은 원하는 부모에게.
+        MakeBullet.SetActive(False);    // 만들어준 Bullet1 을 비활성화
+        BulletPool.Add(MakeBullet);   // 리스트에 추가.
+      }
+	  }
+
+    private GameObject GetBullet() // 총알 호출 함수
+    {
+      for(int i = 0 ; i < BulletPool.Count; i++) // 리스트에 들어있는 총알 만큼
+      {
+        if(P)
+      }
+    }
+}
+
+```
+
+### C#
+> Expain shortly
+
+설명
+
+
+```
+Typing Code
+
+```
