@@ -1,34 +1,69 @@
-코루틴
+# TIL   / 2018-05-02
+  ## Unity
+    ### SingleTon < C# >
 
-싱글쓰레드를 쓰면
-애니메이션과 같은
-애니메이션을 쓸수가 없다
 
-그렇기 위해서 쓰레드를 사용한다
+> Summary
+-  오브젝트 생성(Instantiate) 와 삭제 (Destroy) 가 잦아지면 부하의 증가로 가비지 콜렉터 호출 렉이 발생한다.
+-  그럼 미리 만들어놓고 활성, 비활성화 하여 재활용 하면, 가비지 콜렉터가 발생하지 않는다.
+-  미리 쓸만큼 만 만들어 놓고, 일정 조건(화면밖으로 나간다던지 하는,) 이 되면 비활성화 시켜놓자.
+-
 
-동시에 여러가지 일을 하는것이다.
-쓰레드로 쓰면 풀보다는 속도는 느릴수도 있지만
-예를 들어서 파일을 다운받을때, 다운진행률을 표시를 하고 받는작업을 동시에 하는 것이다.
+### C#
+> 필요로 하는것은 프리팹화 된 발사체(GameObject), 발사체를 담을 탄창(Queue , List)
 
-하지만 매우 큰 단점이 있는데,
-예를 들어서 파일을 열어놓고 수정하면  한자원을 같이 사용하기 때문에 충돌이 난다.
+모든 클래스에서 사용가능하도록, static 으로 큐를 선언하거나, 싱글톤을 사용한 풀링매니저를 만들어주자.
+가능하면 풀링은 한곳에서 처리해주도록 해야 부하가 적다.
 
-게임의 경우에도 많은 자원중에 한 자원을 쓰면 충돌이 나기 때문에 안전장치가 필요하다
-크리티컬 섹션 과 같은.
 
-쓰레드로 쓰면 어떤 자원이 언제 접근할지 모르기 때문에 난이도가 올라갈수밖에 없다.
+```
+// 네이버 블로그 H_studio 의 Hyorung 글 참고.
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-유니티에서는 코루틴이 있다.
-예를 들어서 일정 부분을 먼저 사용하고 이후 후에 다른 작업을 쓴다.
+public class Pooling : MonoBehaviour {
 
-우리가 만든 로드 제이슨을 보자.
-이때 자원이 많으면 사람들이 지루하기에
-코루틴을 써서 로딩화면을 만들어 본다.
+    public static Pooling current;   //모든 클래스에 접근 가능하게 해준다
 
-yield return 을 실행하면
-업데이트 한프레이 돌고 리턴까지 실행을 한다.
+    public GameObject Bullet1 = null;      //  사용할 게임오브젝트
 
-쓰레드랑은 조금 다르게
-자원을 나누어서 순서에 따라 작업을 하는것,
+    public int BulletAmount = 10;       // 원하는 갯수
 
-쓰레드의 경우에는 
+    public List<GameObject> BulletPool;
+
+    void awake()
+    {
+      current = this;       //static 으로 선언한  Pooling 클래스에 접근할수 있게된다.
+    }
+	  void Start ()
+    {
+      for(int i = 0; i < BulletAmount;  i++)    // Amount 의 갯수 만큼
+      {
+        var MakeBullet = Instantiate(Bullet1); // transform 은 원하는 부모에게.
+        MakeBullet.SetActive(False);    // 만들어준 Bullet1 을 비활성화
+        BulletPool.Add(MakeBullet);   // 리스트에 추가.
+      }
+	  }
+
+    private GameObject GetBullet() // 총알 호출 함수
+    {
+      for(int i = 0 ; i < BulletPool.Count; i++) // 리스트에 들어있는 총알 만큼
+      {
+        if(P)
+      }
+    }
+}
+
+```
+
+### C#
+> Expain shortly
+
+설명
+
+
+```
+Typing Code
+
+```
