@@ -12,7 +12,8 @@
 
 4. 물론 Update 함수에 추가하여 사용하는것이 가능하지만. Couroutine 이 편리하다고함.
 
-5. Updata 함수 안에 넣어서 사용하는것은 부하가 커지기 때문에 Couroutine을 업데이트 처럼 사용할수 있게끔 해보자.
+5.  Update 가 Coroutine 보다 2배이상 빠르다고 한다. (https://sunhyeon.wordpress.com/2012/11/20/376/) 참고
+    따라서  매 프레임마다 불러올때는 Update를 사용하고 그렇지 않다면 Couroutine 사용하자.
 
 ### C#
 >아래는 시간에 따라 점차적으로 알파값을 줄이는 함수이다.
