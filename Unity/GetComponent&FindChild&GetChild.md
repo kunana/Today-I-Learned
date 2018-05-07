@@ -25,6 +25,7 @@ Void Start()
 
   Transform myTranform = (Transform).getComponent(typeof(Transform));
 }
+```
 
 > 다른 스크립트에 포함된 컴포넌트, 메소드, 변수 불러오기
 1. 스크립트에 public gameobject = null 선언 후 인스펙터에 추가하기.
@@ -35,31 +36,33 @@ Void Start()
 + Start에서 비활성화 된 오브젝트는 상속 되어 있는 Parent GameObject 에서 찾아서 Active 시켜야함.
 
 1.  스크립트에 public gameobject = null 선언 후 인스펙터에 추가하기
+
 ```
-// 인스펙터에서 추가하거나,
+// 아래 스크립트를 추가한 후에 인스펙터에서 추가하거나,
 public GameObject Object = null;
   public Canvas canvas = null;
-// Use this for initialization
+
+
 void Start () {
-
-
 }
 ```
+
 2. 게임오브젝트에 할당되어있는 Tag 찾아서 불러오기
+
 ```
-// 인스펙터에서 추가하거나,
+
 public GameObject Object = null;
   public Canvas canvas = null;
-// Use this for initialization
+
 void Start () {
 
   Object = GameObject.FindGameObjectWithTag("Tag");
 
-// Object 와 Objects 의 식별에 유의한다.
+// Object 와 Objects 의 식별에 유의한다. Objects 는 배열로 불러준다.
   GameObject[] Canvas = GameObject.FindGameObjectsWithTag("Tag");
 }
-
 ```
+
 Typing Code
 
 ```
