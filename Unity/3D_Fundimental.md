@@ -16,7 +16,7 @@
  정점쉐이더는 정점들의 위치를 좌표로 변환, 공간변환해준다.
 
 -  3D_PipeLine
-![3dpipeline](C:\Users\KeunK\Documents\GitHub\Today-I-Learned\Unity\Pic\GPUPipeLIne.jpg)
+![3dpipeline](./Pic/GPUPipeLIne.jpg)
 
 1.  3D 모델은 폴리곤(다각형) 으로 구성하는것이 표준, 삼각형들의 집합으로 여러가지 도형들을 나타낸다.
 2. 삼각형은 3개의 정점으로 이루어짐 (Vertex, 꼭짓점)
