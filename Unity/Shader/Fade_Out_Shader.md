@@ -1,12 +1,13 @@
 # TIL   / 2018 - 08 - 07
-  ## Shader
-    ## Fade Out Shader
-      + 참고 (http://www.shaderslab.com/shaders.html)
-      + 참고 (https://www.youtube.com/watch?v=fWi4io6nlaA)
+  
+## Shader
+### Fade Out Shader
+> 참고 (http://www.shaderslab.com/shaders.html)
 
+> 참고 (https://www.youtube.com/watch?v=fWi4io6nlaA)
 
-   ### 알파 쉐이더
-Distance 에 따라 알파값을 주는 쉐이더
+### 알파 쉐이더
+>Distance 에 따라 알파값을 주는 쉐이더
 
 ```
 Shader "Custom/AlphaDependingDistance"
