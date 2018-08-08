@@ -121,8 +121,8 @@ public class Launcher : Photon.PunBehaviour
         //마스터 접속시 바로 랜덤한 방에 들어감
         PhotonNetwork.JoinRandomRoom();
     }
-    //연결이 끊켰을때의 콜백
-    public override void OnDisconnectedFromPhoton()
+    
+    public override void OnDisconnectedFromPhoton() //연결이 끊켰을때의 콜백
     {
         Debug.Log("DemoAnimator/Launcher: OnDisconnectedFromPhoton() was called by PUN");
     }
@@ -133,8 +133,7 @@ public class Launcher : Photon.PunBehaviour
         //접속 실패시 자동으로 방을 만든다.
         PhotonNetwork.CreateRoom(null, new RoomOptions() { maxPlayers = MaxPlayersPerRoom }, null);
     }
-    //방에 들어갔을때
-    public override void OnJoinedRoom()
+    public override void OnJoinedRoom()  //방에 들어갔을때
     {
         Debug.Log("DemoAnimator/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
     }
