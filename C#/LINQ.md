@@ -2,6 +2,8 @@
 
   # LINQ - Language-Intergrated Query < C# >
 
+<br>
+
 >## LINQ?
 
 + C#언어의 통합 질의 언어라고 한다.
@@ -11,8 +13,12 @@
 + 복잡한 구문을 간단하게 필터링 하거나 정렬 할수 있다.
 + Extension Method, Anonymous Type, var 키워드, Lambda 식, Query 문법이 있다.
 
+<br>
+
 >## Query?
 + 정보 수집에 대한 요청에 쓰이는 컴퓨터 언어
+
+<br>
 
 >## 예제
 
@@ -55,11 +61,14 @@ foreach (var i in data)
 ```
 > 위와 같이 간단하게 만들수 있다.
 
+
 >## var 키워드
 + 인터프리터언어(javaScript)에서 사용 하는 형식이 정해지지 않은 임의의 변수
 + c#의 var 타입은 컴파일때 타입이 결정된다! (기존은 런타임때)
 + 따라서 var가 많을수록 컴파일 타임도 늘어난다.
 + 초기값을 할당해주지 않으면 어떤 타입인지 알수없어서 초기 할당이 중요하다. 
+
+<br>
 
 >## from  키워드
 >### (from 범위변수 in 데이터 원본)
@@ -67,25 +76,33 @@ foreach (var i in data)
 + 이때 범위변수는 데이터를 저장하지 않는다. 
 + 데이터 원본은 iEnumerable, iEnumerable<T> 인터페이스를 상속 하거나, IQueryable<T> 와 같은 파생 인터페이스를 지원하는 형식이어야 한다.
 
+<br>
+
 >## where  키워드
 >### (where 조건식)
 + 필터와 같은 역할이며, 데이터 원본으로 부터 순차적으로 가져온다.
 + 참이면 요소를 반환, 거짓이면 반환하지 않는다.
 + 여러개 사용 가능하다.
 
+<br>
+
 >## orderby 키워드
 >### (orderby 범위변수 descending / ascending)
 + 정렬. 오름차순은 ascending 내림차순은 descending
 + defalut 는 오름차순으로 되어있다.
+
+<br>
 
 >## select 키워드
 >### (select 범위범수)
 + 최종 결과를 산출
 + 끝은 반드시 select 혹은 group 절로 끝난다.
 
+<br>
+
 >## group 키워드
->### (group 범위범수 by 분류기준)
->### (group 범위범수 by 분류기준 into 그룹 변수)
+>### (group 범위범수 by 분류기준)  /  (group 범위범수 by 분류기준 into 그룹 변수)
+
 + 그룹화하여 그룹개체를 반환.
 + into 키워드는 추가적인 쿼리작업 수행을 위함
 
@@ -124,6 +141,9 @@ foreach (var studentGroup in queryStudent)
 
 //출처: http://blog.eairship.kr/262?category=442691 [누구나가 다 이해할 수 있는 프로그래밍 첫걸음]
 ```
+
+<br>
+
 > 이번에는  그룹변수에 따라 구분해보자
 ```csharp
 List<Student> listStudent = new List<Student>
@@ -173,6 +193,8 @@ foreach (var stuGroup in queryStudent)
 ///출처: http://blog.eairship.kr/262?category=442691 [누구나가 다 이해할 수 있는 프로그래밍 첫걸음]
 ```
 
+<br>
+
 >## 데이터 변환을 수행하지 않는 LINQ to Objects
 
 > #####  출처 https://docs.microsoft.com/ko-kr/dotnet/csharp/programming-guide/concepts/linq/type-relationships-in-linq-query-operations
@@ -181,7 +203,7 @@ foreach (var stuGroup in queryStudent)
  >## 소스 데이터를 변환하는 쿼리
 
 
- ![](2018-08-15-22-02-46.png)
+![](![](2018-08-15-22-37-13.png).png)
 
 ##### 출처 및 참고 (http://taeyo.net/Columns/View.aspx?SEQ=207&PSEQ=31&IDX=3)
 #####  출처 및 참고 (http://blog.eairship.kr/262?category=442691)
