@@ -17,6 +17,7 @@
 
 >## Query?
 + 정보 수집에 대한 요청에 쓰이는 컴퓨터 언어
++ 가장 먼저 어디서 데이터를 가져올 것인지를 정하고(from), 가져온 데이터 중에서 어떤 데이터를 걸러낼 것이며(where), 걸러진 데이터를 어떤 형태로 가져올 것인가(select)를 정의하게 됩니다.
 
 <br>
 
@@ -195,6 +196,119 @@ foreach (var stuGroup in queryStudent)
 
 <br>
 
+>## Join 키워드
+>### (from 비교할 기준 데이터 a In A)
+>### (Join 비교할 대상 데이터 b In B on a-field equals b-field)
+
++ 서로 직접적인 관계가 없는 두개의 데이터 원본을 연결시킬때 사용한다.
++ 각 원본의 요소가 서로 같은지 비교하여 일치하면 데이터를 연결시키고,
++ 일치하지 않는다면, 연결 하지 않는다.
++ 내부조인과 외부조인, 두가지가 있다.
+
+> 예제 데이터
+```csharp
+List<MyAverage> listAverage = new List<MyAverage>
+{
+    new MyAverage() { Name = "김철수", Average = 78.5 },
+    new MyAverage() { Name = "김영희", Average = 91.2 },
+    new MyAverage() { Name = "홍길동", Average = 77.3 },
+    new MyAverage() { Name = "김길수", Average = 80.8 },
+    new MyAverage() { Name = "김영순", Average = 54.2 },
+    new MyAverage() { Name = "김상수", Average = 90.8 },
+    new MyAverage() { Name = "이한수", Average = 61.4 }
+};
+ 
+List<MyHobby> listHobby = new List<MyHobby>
+{
+    new MyHobby() { Name = "김영순", Hobby = "자전거 타기" },
+    new MyHobby() { Name = "홍길동", Hobby = "컴퓨터 게임" },
+    new MyHobby() { Name = "이한수", Hobby = "피아노 연주" },
+    new MyHobby() { Name = "김철수", Hobby = "축구" }
+};
+
+
+출처: http://blog.eairship.kr/262?category=442691 [누구나가 다 이해할 수 있는 프로그래밍 첫걸음]
+```
+>내부조인
+``` csharp
+var queryStudent = from student in listAverage
+                   join hobby in listHobby on student.name equals hobby.name
+                   select new {Name = student.name , Hobby = hobby.Hobby,
+                   Average = student.Average};
+
+foreach(var studentGroup in queryStudent)
+{
+    Console.WriteLine
+    ("이름: {0}\n\t평균: {1}점\n\t취미: {2}", 
+    studentGroup.Name, studentGroup.Average, studentGroup.Hobby);
+
+// 결과 :
+// 이름: 김철수
+//         평균: 78.5점
+//         취미: 축구
+// 이름: 홍길동
+//         평균: 77.3점
+//         취미: 컴퓨터 게임
+// 이름: 김영순
+//         평균: 54.2점
+//         취미: 자전거 타기
+// 이름: 이한수
+//        평균: 61.4점
+//        취미: 피아노 연주
+
+}
+
+```
+> 코드 설명
+
+두 데이터의 같은 이름이 있는지를 구별하여, 이름, 평균점수,  취미를 받아 주었다.
+
+1. listAverage 에 있는 student 라는 기준 데이터와,
+
+2. listHobby 에 있는 hobby 라는 대상 데이터의 name 값이 각각 같은지 선별하고,
+
+3. 선별된 것들을 new 키워드를 써서 Name, Hobby, Average 프로퍼티에 
+
+4. 각각  {Name = student.name , Hobby = hobby.Hobby,Average =student.Average } 의 데이터가 
+5. queryStudent 에 들어간다. 
+
+>외부 조인
+``` csharp
+
+var queryStudent = from student in listAverage
+                   join hobby in listHobby on student.name equals hobby.name into sg
+                   from hobby in sg.DefaultIfEmpty(new MyHobby() {Hobby = "없음", })
+                   select new 
+                   {Name = student.Name, Average = student.Average, Hobby = hobby.Hobby};
+foreach(student in queryStudent)
+{
+     Console.WriteLine("이름: {0}\n\t평균: {1}점\n\t취미: {2}", studentGroup.Name, studentGroup.Average, studentGroup.Hobby);
+}
+
+// 결과 :
+// 이름: 김철수
+//         평균: 78.5점
+//         취미: 축구
+// 이름: 김영희
+//         평균: 91.2점
+//         취미: 없음
+// ..
+// 이름: 김상수
+//         평균: 90.8점
+//         취미: 없음
+// 이름: 이한수
+//         평균: 61.4점
+//         취미: 피아노 연주
+
+```
+>코드설명
+
+1. 내부조인과 다르게 외부조인은 into 키워드가 사용되었고, sg라는 임시 그룹을 가지며,
+2. DefaultIfEmpty 메서드를 사용하여, 일치하지 않는 데이터에 대하여, 기본값을 지정,
+3. 새로운 프로퍼티를 설정할때 값이 비어있으면 기본값을 넣어준다.
+
+
+## 참고
 >## 데이터 변환을 수행하지 않는 LINQ to Objects
 
 > #####  출처 https://docs.microsoft.com/ko-kr/dotnet/csharp/programming-guide/concepts/linq/type-relationships-in-linq-query-operations
