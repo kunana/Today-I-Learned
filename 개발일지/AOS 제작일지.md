@@ -67,12 +67,47 @@
 
 
 
->### 내일 할일 
-### 작업중인 씬 => Selection.scene
+> ## 내일 할일  
+> ## 작업중인 씬 => Selection.scene
 
-챔피언 골랐을때, 다른 클라이언트에 해당 플레이어리스트 프리팹에
++ 챔피언 골랐을때, 다른 클라이언트에 해당 플레이어리스트 프리팹에
 이름 뜨도록 동기화
 -> 생성되지않은 프리팹에 포톤뷰 를 넣어서 쓰면 illegal error.
+
+<br>
+
+> ## -> 생성되지 않은 프리팹을 쓸때 포톤뷰를 넣고 프리팹 자체를 Observed Components 에 넣어준다 (8월 27일)
+> ## 혹은  아래와 같이 ViewID를 할당해준다
+```csharp
+//PhotonNetwork.AllocateViewID() 메소드를 사용
+// 새로운 viewID를 할당해야 하며 이 viewID를 통해 메시지를 전달
+
+void SpawnPlayerEverywhere()
+{
+    // You must be in a Room already
+
+    // Manually allocate PhotonViewID
+    int id1 = PhotonNetwork.AllocateViewID();
+
+    PhotonView photonView = this.GetComponent<PhotonView>();
+    photonView.RPC("SpawnOnNetwork", PhotonTargets.AllBuffered, transform.position, transform.rotation, id1, PhotonNetwork.player);
+}
+
+public Transform playerPrefab; //set this in the inspector
+
+[RPC]
+void SpawnOnNetwork(Vector3 pos, Quaternion rot, int id1, PhotonPlayer np)
+{
+    Transform newPlayer = Instantiate(playerPrefab, pos, rot) as Transform;
+
+    // Set player's PhotonView
+    PhotonView[] nViews = newPlayer.GetComponentsInChildren<PhotonView>();
+    nViews[0].viewID = id1;
+}
+```
+
+
+에 넣어주고  RPC 사용
 
 -> RPC로 함수 콜해서 바로 컴포넌트 찾으면 OverFlow. 255넘어서 그런듯.
 
