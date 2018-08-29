@@ -32,7 +32,7 @@ public class RPC : Photon.PunBehaviour {
         //숏컷이란 네트워크상의 문자열 전송은 비효율적이기 때문에, 문자열을 줄여서 전송함
         //스크립트상의 RPC를 감지하고 목록을 컴파일함. 각 메소드는 리스트를 통해 ID를 얻고 아래와 같이 string으로 메소드 호출.
         //백엔드 상에서는 ID로 메소드 호출
-        //RPC 목록은 PhotonSErverSettings 에서 관리
+        //RPC 목록은 PhotonServerSettings 에서 관리
         this.photonView.RPC("Msg", PhotonTargets.AllViaServer, "Hello World!");
 
 
@@ -70,8 +70,8 @@ public class RPC : Photon.PunBehaviour {
     private void MakeNewOne()
     {
         GameObject OBJ = Instantiate(Box, transform, false);
-        OBJ.AddComponent<PhotonView>();
-        PhotonNetwork.AllocateViewID();
+        var Id = OBJ.AddComponent<PhotonView>();
+        Id.ViewId = 5;
     }
 
     //서버를 통하여 생성, Resources 폴더에 해당 이름의 프리팹이 있어야함

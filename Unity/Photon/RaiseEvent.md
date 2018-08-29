@@ -27,7 +27,7 @@ public class RaiseEvent : Photon.MonoBehaviour
 
     private void OnEnable()
     {
-        PhotonNetwork.OnEventCall += PhotonNetwork_OnEventCall; // 이 스크립트가 존재하는 순간부터 이벤트콜. 
+        PhotonNetwork.OnEventCall += PhotonNetwork_OnEventCall; // 이 스크립트가 Enable 된 순간부터 이벤트콜. 
     }
 
     private void PhotonNetwork_OnEventCall(byte eventCode, object content, int senderId) // 이벤트 수신 함수
