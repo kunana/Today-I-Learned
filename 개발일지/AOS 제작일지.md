@@ -336,3 +336,93 @@ catch(e)
 3. 플레이어 스펠, 영웅 데이터화 후 인게임으로 넘겨주기
 4. 로고 의 Shine 효과 나는 쉐이더 검색중.
 5. 룬 작업?
+
+
+
+>## 내일 할일 
+### 작업중인 씬 => Selection.scene
+
+1. 스펠버튼 공유 풀기 및 AddListener 무반응 문제 해결하기 -> AddListener 가 무반응. 공유풀기는 로컬과 동기화 함수 구분 할것.
+1. 만약 사람이 나가면 현재 있는 클라이언트 모두 로비로 이동 
+3. 플레이어 스펠, 영웅 데이터화 후 인게임으로 넘겨주기
+1. 로고 의 Shine 효과 나는 쉐이더 검색중.
+5. 룬 작업?
+7. 위 작업 끝나면 UI 변경 -> 정무에게 인계
+
+<br>
+
+># 9월 4일자
+
+> ## 오늘 했던 작업 -> KTYOption.Scene
+
++ ## 영탁 형님이 작업했던 Option Canvas 받아서 UI 수정 및 옵션 추가 (작업중)
+
++ ## 명우씨와 호동씨의 미니언 AI, 맵 배치 머징이 끝나면 서버에 붙일것 (머징 완료 대기중)
+
+
+
+
+> ## 버그
+
++ ## 챔피언 선택시간 안맞는 버그 -> RaiseEvent 로  마스터 클라이언트 한곳에서 다른클라이언트에게 전송하기
+
+> ## 노트
+```csharp
+1. 포톤에서는 로비에 존재하고 있는 플레이어 리스트를 제공하지 않음. 수천가지의 경우의 수가 있어서 리스트로 만들기에는 너무 많다고 한다. 또한 안정적이며, 저비용으로 처리하기 위한 대역폭을 절약 할수 있다고 한다.  대신 
+
+PhotonNetwork.CountofPlayersOnMaster();  // 로비에 존재하는 플레이어 수를 받아올수는 있음.
+
+PhotonNetwork.CountOfRooms() // 생성되어 있는 방의 갯수. 이건 로비에 없어도 받아올수있음.
+
+포톤을 이용해서 구현을 한다고 치면, 
+
+OnjoinnedLobby() 일때 RaiseEvent 로 다른 로비에 있는 플레이어에게 플레이어 리스트 생성. 
+
+OnjoinnedRoom() 이 불리면 씬이 전환 되기 전에 PhotonNetwork.RaiseEvent -= CurEvent;
+
+그리고 플레이어 리스트 삭제. 비용이 많이 드는건 당연 할듯. 대안이 없을까? 
+
+
+1-1. 유니티 네트워킹에서는 OnClientEnterLobby(), OnClientExitLobby() 로 플레이어 이름 받아서 만들어 주면 될듯.
+
+
+1-2. UntyPark Suite 라는 API. 유료. 로드 밸런서, DB 통합 및 DB 구현 솔루션, 로비 시스템, 계정관리, 서버관리, 채팅, 친구 목록, 지리적 필터링, 플레이어 매치메이킹 등이 있다고 함.
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+
+2. InputField 에 한글이 안쳐질때 -> 새로 만들기..... 
+
+
+3. 이미 생성된 방의 마스터 클라이언트 이름을 불러오기. CustomPropertyForLobby() 를 사용
+//using Photon HashTable!
+//커스텀 프로퍼티 생성!
+RoomOption.CustomRoomPropertis = new HashTable(){{"CustomProperty","PhotonNetwork.player.MasterClient"}};
+
+//로비 에서 프로퍼티를 받아오기!
+RoomOption.CustomRoomPropertisForLobby = new string[] {"CustomProperties"};
+
+//커스텀 프로퍼티 받아서 할당!
+HashTable hs = room.customProperties;
+RoomName.Text = (string)["CustomProperty"];
+
+//프로퍼티 Get() Set() 가능! -> 플레이어 커스텀 프로퍼티도 마찬가지!
+hs ["CustomProperties"] = text;
+room.SetCustomProperties (cp);
+```
+
+>## 내일 할일 
+
+>### 작업중인 씬 => KTYOption.scene
+1. UI변경
+2. 환경 옵션 추가 -> 키 바인딩은 제외
+
+
+
+>### 보류중 => AOS_Sever 전반 정무가 UI 수정 및 로비 씬 작업중
+1. 스펠버튼 공유 풀기 및 AddListener 무반응 문제 해결하기 -> AddListener 가 무반응. 공유풀기는 로컬과 동기화 함수 구분 할것.
+1. 만약 사람이 나가면 현재 있는 클라이언트 모두 로비로 이동 
+3. 플레이어 스펠, 영웅 데이터화 후 인게임으로 넘겨주기
+1. 로고 의 Shine 효과 나는 쉐이더 검색중.
+5. 룬 작업?
+7. 위 작업 끝나면 UI 변경 -> 정무에게 인계
