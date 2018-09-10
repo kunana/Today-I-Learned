@@ -68,7 +68,7 @@ public class RaiseEvent : Photon.MonoBehaviour
             CachingOption = EventCaching.DoNotCache,    //캐시하지않음
             Receivers = ReceiverGroup.All,  //모두
 
-            //CachingOption = EventCaching.AddToRoomCache, //서버의 캐시에 있다가 새플레이어가 오면 이벤트를 받음 순서대로.
+            //CachingOption = EventCaching.AddToRoomCache, //서버의 캐시에 있다가 새플레이어가 오면 이벤트를 받음 새플레이어는 캐시된 이벤트를 서버에 도착한 순서대로 가져온다.
             //CachingOption = EventCaching.AddToRoomCacheGlobal, //룸의 이벤트 캐시에 있음 이 이벤트는 캐시에서 제거 되지않음
             //CachingOption = EventCaching.DoNotCache, // 캐시하지 않음
             //CachingOption = EventCaching.RemoveFromRoomCacheForActorsLeft, //특정플레이어가 나가면 캐시를 지움

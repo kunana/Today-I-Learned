@@ -566,3 +566,83 @@ wwww.reddit.com/r/Unity3D/comments/48ao2u/getting_world_position_from_clickable_
 3. 플레이어 스펠, 영웅 데이터화 후 인게임으로 넘겨주기 -> 커스텀프로퍼티로 해주자.
 1. 로고 의 Shine 효과 나는 쉐이더 검색중.
 5. 룬 작업?
+
+<br>
+
+># 9월 10일자
+
+> ## 오늘 했던 작업 -> InGame.Scene
+
++ ## Minimap 커서 & 이펙트 작업 완료
+
++ ## 미니맵 적용 및, RTS카메라 적용, InterReactable 미니맵 적용중 (마우스 좌표가 안맞음))
+
++ ## 미니맵용 Line Render 미니맵 레이어로 분리
+
+
+> ## 버그
+1. 미니맵 Ray 사용시 이동 및 메인 카메라 이동이 되나, 마우스 커서의 좌표와 실제 레이를 쏴서 이동하는 부분이 안맞음. Ray 쏘는 부분에 마우스 좌표 부분 수정해볼것.
+
+
+> ## 노트
+```csharp
+1.  OnPointerClick() 을 사용, ScreenPointToRectangle Ray를 사용. 코드는 추가예정
+
+2. 각 챔피언의 오브젝트를 가지고 있는 매니저가 필요할듯. RaiseEvent할때마다 타 클라이언트에서 Sender 오브젝트를 Find 로 찾을수는 없는 노릇임
+
+3. 챔피언 스킬은 공통적인 부분 을 가진 클래스를 상속 받아서 사용하고 챔피언 마다 스킬이 다른 부분을 Override 해서 사용. 
+
+4. 스킬에 사용되는 모든 파티클 을 pooling 해서 하나의 GameObject 컨테이너에 보관해야할듯. 명우씨는 이후 확장성을 위해 투사체일때, 자기 자신에게만 적용될때, 투사체+자기자신 에 대한 경우에 수를 가지고 설계한다고 하셨음.
+
+5. 스킬 동기화를 위한 설계는 모든 플레이어는 스킬매니저를 가지고 있고, 스킬매니저는  현재 전장에 사용 되는 스킬들만 캐싱하고있다가, RaiseEvent를 송수신할때, 위치값을 가지고 생성, 피격판정과 클라이언트의 팀에 따른 전장의 안개 시야 유무를 위해 Faction 변수를 넣고, 사용 할 예정. 더 좋은 설계가 있을까?
+
+6. 챔피언 A*로 이동하는 부분은 RayCast 배열로 받아주는데, 한번만 받도록 MouseCursor.cs 에 통합해서 수정해야 할듯.
+
+7. Fog of War 사용시 Light 부분은 Baked 해서 사용하니, 기존에 있던 건물 오브젝트나 기타 환경적인 부분의 오브젝트의 텍스쳐가 어두워지고 빛 바래지는 현상 생김. LightOrb 를 사용하여 해결. 
+
+///////////////////////////////////////////////////////////////////필독
+8. 오늘 까먹은 RPC와 RaiseEvent 의 차이점.
+
+RPC 는 Remote Procedure Calls 의 약자로 원격 프로 시저 호출이라고함. 
+
+PhotonView 가 있는 Object 에게만 RPC 호출이 가능하며, 
+
+RPC는 호출즉시 전송안됨. 객체 동기화 주기가 될때까지 버퍼링되며, 전송 주기가 되야 전송함
+
+//이런 지연을 없애기 위해 업데이트 루프를 중지하고 바로 RPC를 전송.
+
+PhotonNetwork.SendOutgoingCommands();
+
+RaiseEvent 는 PhotoneView 와 호출할 메소드가 필요하지만,  고유 식별자인 이벤트 코드를 사용하며, 최대 200개가 가능하다. 메소드를 포톤뷰로 부터 호출하지않는다.
+
+
+//원문 -------------------------------------------------------------------------------
+"RPC call on a game object tells all clients to execute a function on that game object."
+
+"RaiseEvent is more or less detached from a GameObject. This means that you can use an object A to raise an event by using PhotonNetwork.RaiseEvent and an object B to receive this event, which is different to RPCs where you only have one object. RaiseEvent basically allows you to have a mediator for all of your custom events."
+
+
+'RaiseEvent는 GameObject에서 어느 정도 분리되어 있습니다. 즉, 개체 A를 사용하여 PhotonNetwork.RaiseEvent를 사용하여 이벤트를 발생시키고 개체 B를 사용하여 하나의 개체 만있는 RPC와는 다른이 이벤트를 수신 할 수 있습니다. RaiseEvent는 기본적으로 모든 사용자 지정 이벤트에 대한 조정자를 허용합니다.'
+
+결과적으로 좀더 정밀한 RPC라고 생각 하면 될듯? (아니면 수정...) 
+
+RaiseEvent 또한 즉시 소켓에 쓰여지지않고 SendOutgoingCommands() 가 호출될때까지 대기한다고한다. 
+
+이런 절차로써 메세지를 더 적은 수의 데이터로 모으고 트래픽을 절약할 수 있다고 한다.
+
+RPC를 뜯어보면 RaiseEvent 를 사용하는 것을 알수있다.
+
+```
+
+>## 내일 할일 
+
+>### 작업중인 씬 => InGame.scene
+1. 마우스커서 좌표 조정
+
+2. 미니언은 이동 GIZMO 끄기.
+
+4. 변경된 리스폰 스크립트 적용하기(명우씨 작업 스크립트)
+
+>### 보류중 => Login.cs
+1. 로고 의 Shine 효과 나는 쉐이더 검색중.
+5. 룬 작업?
