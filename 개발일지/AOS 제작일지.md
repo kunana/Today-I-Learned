@@ -724,3 +724,257 @@ RPC를 뜯어보면 RaiseEvent 를 사용하는 것을 알수있다.
 
 >### 보류중 => Login.cs
 1. MMO UI 에서 추가 적용할 수 있는 것은 제일 마지막에 시간나면 적용.
+
+<br>
+
+># 9월 11일자
+
+> ## 오늘 했던 작업 -> InGame.Scene
+
++ ## 미니맵 핑 작업 중 (원점으로 부터 마우스 커서 까지 상하좌우 방향 찾아서 받아오기, 쿼터뷰 카메라 시점에 맞게 LineRender 하기.  )
+
+
+
+> ## 버그
+
+
+> ## 노트
+```csharp
+1. 호동, 노명 -> 스킬 이펙트 작업 / 명우 -> 스킬 스크립트 작업 / 정무 -> Selection.Scene 리팩토링중
+
+2. 근우 -> 핑 송수신 작업
+
+3. 의식의 흐름 대로.. 
+
+  핑은 메인 카메라용 큰 사이즈의 UI 와 미니맵용 작은 사이즈의 UI 로 나뉨. 
+  
+  Alt 키와 마우스 오른쪽 키 드래그 누르고 있을시 시 UI 활성화 (EventTrigger 사용) + 최초 마우스 커서위치 저장
+  
+  UI 원점 을 시작점, 마우스 커서가 끝점으로 하는 Line 생성. (멀어질수록 길어짐)
+  
+  각각 4방향의 버튼은 마우스커서를 위, 아래, 좌, 우, 중앙 위치을 판단
+  
+  열거형 으로 5가지의 버튼중 하나 조건을 선택  + 버튼 색 바뀌기
+  
+  핑은 각각 클라이언트가 10개씩 총 40개를 풀링으로 미리 생성해서 가지고있음
+  
+  -> 핑 신호 갯수에 대한 조건은 확인해보기
+
+
+  만약 위쪽 방향으로 커서를 놓고 마우스 오른쪽 드래그를 놓았을때, 
+  
+  1. 선택한 위쪽 버튼의 열거형 조건 변경 (MouseOver 혹은 PointOver)
+  
+  2. 최초 저장한 마우스 커서 위치 -> 월드좌표로 변환 ->  메인화면에 핑 생성 
+  
+  3. 각각의 핑 이펙트는 미니맵용 레이어가 설정된 스프라이트? 파티클을 가지고있음. (미니맵도 같이 보일수 
+  있게)
+  
+  4. 혹은 미니맵 스크립트에서 좌표를 받아 따로 실행.
+  
+  5. 송출자 는 RaiseEvent 실행. (월드 좌표값, 핑의 종류, 어느 팀인지)
+  
+  6. 수신자는 RaiseEvent 받아서 해당 위치에 핑 생성
+  
+  7. UI 비활성화
+  
+  8. Exit 버튼일때는 Return;
+  
+  9. 미니맵용 UI도 재활용 해서 사용
+
+
+```
+
+>## 모레 할일 
+
+>### 작업중인 씬 => InGame.scene
+
+1. 미니언은 이동 GIZMO 끄기.
+
+1. 미니맵 스크립트 작성 (로컬 작동까지만)
+
+1. Interest 그룹 알아보기 -> 원하는 팀에게만 쉽게 송출하기 위함
+
+5. EventGroup 미리 설정 해보기 (최대 200개 가능)
+
+
++ ## 마우스 핑 풀링 적용하기
+
+
+>### 보류중 => Login.cs
+1. MMO UI 에서 추가 적용할 수 있는 것은 제일 마지막에 시간나면 적용.
+
+<br>
+
+># 9월 13일자
+
+> ## 오늘 했던 작업 -> InGame.Scene
+
++ ## 미니맵 핑 작업 중 (UI 제작 완료)
+
+
+
+
+> ## 버그
+
+
+> ## 노트
+```csharp
+1. 12일은 예비군 
+```
+
+>## 내일 할일 
+
+>### 작업중인 씬 => InGame.scene
+
+1. 미니맵 스크립트 작성 (로컬 작동까지만)
+
+1. Interest 그룹 알아보기 -> 원하는 팀에게만 쉽게 송출하기 위함
+
+5. EventGroup 미리 설정 해보기 (최대 200개 가능)
+
+
++ ## 마우스 핑 풀링 적용하기
+
+
+>### 보류중 => Login.cs
+1. MMO UI 에서 추가 적용할 수 있는 것은 제일 마지막에 시간나면 적용.
+
+<br>
+
+># 9월 13~15일자
+
+> ## 오늘 했던 작업 -> InGame.Scene
+
++ ## 미니맵 핑 작업 중 (원점으로 부터 마우스 커서 까지 상하좌우 방향 찾아서 받아오기, 쿼터뷰 카메라 시점에 맞게 LineRender 하기.  )
+
+> ## 버그
+
+
+> ## 노트
+```csharp
+1. 평면 조건에서 회전 각도를 구하여 적용하였다가  RTS 카메라 가 적용된 씬에서 선을 그리니, 
+UI 평면 상의 시작점과 끝점의 Z값이 맞지않아 맞추는데 2일 정도 걸린듯..
+
+아래는 해결 코드, UI 와 수평을 이루는 가상의 Plane 을 만들어서, Ray를 쏴 부딪힘. 
+
+plane = new Plane(-transform.forward, transform.position); // 축, 원점을 기준으로 한 가상의 평면
+MousePosToRay = TargetCamera.ScreenPointToRay(Input.mousePosition); //카메라에서 마우스까지의 Ray
+float distanceForEndPos = 0;
+plane.Raycast(MousePosToRay, out distanceForEndPos);
+endPos = MousePosToRay.origin + MousePosToRay.direction * distanceForEndPos;
+```
+
+```csharp
+2. 좌표 변환 하는게 많이 헷갈린다.. 시간내서 공부 해야할듯.
+
+3. 라인렌더러의 선을 수평으로 맞추고, UI의 높이를 캔버스와 수평으로 맞추고, UI의 중점 받아와서 월드로 바꾸어 생성하는데.. 3일 걸림.. UI 부분은 아직 한참 공부해야 겠네...ㅜㅜ
+```
+
+
+>## 모레 할일 
+
+>### 작업중인 씬 => InGame.scene
+
+1. 미니맵핑 작업중
+
+1. Interest 그룹 알아보기 -> 원하는 팀에게만 쉽게 송출하기 위함
+
+5. EventGroup 미리 설정 해보기 (최대 200개 가능)
+
+
++ ## 마우스 핑 풀링 적용하기
+
+
+>### 보류중 => Login.cs
+1. MMO UI 에서 추가 적용할 수 있는 것은 제일 마지막에 시간나면 적용.
+
+<br>
+
+># 9월 17일자
+
+> ## 오늘 했던 작업 -> InGame.Scene
+
++ ### 미니맵 핑 작업 중 (각도 받아오기, UI 캔버스와 수평이루기, 원하는 지점에 생성, 미니맵에도 핑 표시 ,풀링적용 완료)))
+ 
+
+> ## 버그
+1. 에셋에 포함되어 있는 Prefab  Hirerarchy 에 안꺼내짐.. 새로 만든 Prefab은 됨. 
+
+1. 마우스 핑이 보이지않음. 위치가 안맞는듯..? 증상만 확인함
+
+1. 미니맵 을 위한 작은 핑 UI 를 꺼내려고 하는데, 포인터 클릭은 같이 안먹고, 업데이트에서 넣어도 중단점에서 불러지지 않음
+```csharp
+private void OnPointerClick(PointerEventData eventData) 
+{
+   if (eventData.button == PointerEventData.InputButton.Left 
+   && Input.GetKeyDown(KeyCode.LeftAlt) && Input.GetMouseButtonDown(0))
+   {
+     SmallPing.SetActive(true);
+   }
+}
+
+private void update()
+{
+    if (Input.GetKeyDown(KeyCode.LeftAlt) && EventSystem.current.IsPointerOverGameObject()
+    && Input.GetMouseButtonDown(0))
+    {
+      SmallPing.SetActive(true);
+    }
+}
+```
+
+<br>
+
+> ## 노트
+```csharp
+1. 마우스 위치를 받아 UI 를 조정, 캔버스 와 수평을 맞추기
+
+ var screenPoint = new Vector3(Mouse.x, Mouse.y, PlaneDistance); // z값을 캔버스 Plane Distance 값 줌
+ transform.position = Camera.main.ScreenToWorldPoint(screenPoint);
+```
+
+```csharp
+2. UI의 중점에 핑 생성.. 
+
+Mouse.z = Camera.main.farClipPlane; // OnEnable 에서 받아온 마우스 초기값 + Z 값
+Ray ray = Camera.main.ScreenPointToRay(Mouse); // 마우스 좌표를 기준으로  스크린을투과하는 레이
+RaycastHit[] hits = Physics.RaycastAll(ray);
+  foreach (RaycastHit hit in hits)
+  {
+    if (hit.collider.gameObject.layer.Equals(LayerMask.NameToLayer("GroundLayer")))
+    {
+      // 타겟을 레이캐스트가 충돌된 곳으로 옮긴다.
+      InitialCoordinate = hit.point; 
+      MakePingSign();
+    }
+  }
+```
+
+```csharp
+3. 마우스가 GameObject(UI) 위에 있는지 유무 체크
+
+if(EventSystem.current.IsPointerOverGameObject()) 
+```
+```csharp
+4. 미니맵 좌표를 월드좌표로 바꾸기 -> 코드 별도 첨부
+
+5. 미니맵에 핑 따로 표시 -> 미니맵을 Camera Render Texture 를 써서 야매로 자식핑 만들어서 Y축 올려 하나로 만듬..
+```
+
+>## 내일 할일 
+
+>### 작업중인 씬 => InGame.scene
+
+1. 미니맵용 Ping UI 마저 작업하기
+
+2. ## 마우스 핑 풀링 적용하기
+1. Interest 그룹 알아보기 -> 원하는 팀에게만 쉽게 송출하기 위함
+
+5. EventGroup 미리 설정 해보기 (최대 200개 가능)
+
+
+
+
+>### 보류중 => Login.cs
+1. MMO UI 에서 추가 적용할 수 있는 것은 제일 마지막에 시간나면 적용.
