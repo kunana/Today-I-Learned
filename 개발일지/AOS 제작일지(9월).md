@@ -698,4 +698,124 @@ Vector2.SignedAngle(Vector3.up,dir);
 >### 보류중 => Login.cs
 1. MMO UI 에서 추가 적용할 수 있는 것은 제일 마지막에 시간나면 적용.
 
+<br>
+
+># 9월 19일자
+
+> ## 오늘 했던 작업 -> InGame.Scene
+
++ ### 미니맵 핑 작업완료
+
++ ### 맵핑 풀링 분리(꺼내 쓸때, 재활용 안하고 생성 하길래, 수정해야할듯)
+
++ ### '갑니다' 핑(플레이어가 핑을 향해 오는 방향 표시) 작업 완료
+
++ ### 마우스 클릭 FX 좌표 안 맞는 부분 수정중
+ 
+
+> ## 버그
+### 1. 마우스 클릭 Fx 좌표가 맞지 않는다. 
+``` csharp
+레이캐스트를 쏘아서 Terrain 레이어에 맞으면 좌표를 반환해주는데, 좌표가 (0.4f 0.5f)
+
+정도로 원점 부근에서 찍히길래, Draw.Ray 로 확인해보니, 
+
+Terrain 기준 원점 에서 -X 축 방향으로 한참 벗어나 있는것이 확인. 
+```
+
+> ## 노트
+
+>### 1. 미니맵 핑 UI 원점으로 부터 각도 변환 완료 (360도)
+```csharp
+
+//코드추가하기.
+```
+
+>### 2. 오늘 했던 작업중 3번 항목, 리그 오브 레전드에서 위와 같은 스마트 핑 기능.
+
+![](2018-09-19-20-31-04.png)
+
+__리그오브 레전드 스마트핑 기능__
+
+1. [스마트 핑][SmartPing]
+1.  [Unity Manual: RotationOverLifeTime][UNITY_Rotation_Over_Lifetime]
+
+```c
+아래에 있는 화살표가 챔피언의 방향을 받아와 움직임.
+
+처음에는 카메라 렌더러로 텍스트를 머터리얼화 시켜서 파티클로 만들고,
+
+플레이어 이름을 받아서 갱신하고, 오는 방향 따라서 회전을 시켜줄려고 했었음.
+
+처음에는 /*Particle System.MainModule*/ 을 받아와서 
+
+매 프레임마다 /*3DStartRotation.Z*/ 를 변경 해주었음. 생각 처럼 잘 안움직임.
+
+검색해보니 3DStartRotation 은 2초 마다 한번 갱신하고, 나머지는 시간은 무시함.
+
+실시간으로 하려면 /*Rotation Over Lifetime*/ 을 사용하면 되겠구나 싶음.
+
+뭔가 잘못 했는지, 바로 회전이 변경되지 않음..
+
+일단은 포기하고 2D Sprite 로 변경하여 LookAt 으로 위치값 받아 회전.
+```
+
+>### 3. 텍스트를 파티클로 만들기.
+
+[Tutorial Video :][TextParticleTutorial]
+[by Liloe][Liloe]
+
+1. Otho 그래픽 카메라를 추가 
+
+2. 캔버스에 > 패널 > 텍스트 를 추가.
+
+3. 패널은 검정색 알파값은 1.0f, 텍스트는 흰색, 크기는 패널에 맞게 
+
+4. Render Texture 를 카메라에 추가.
+
+5. Screen Space - Camera 에 Otho 카메라 추가
+
+6. 3번 에서 만든 텍스쳐를 새로운 머터리얼에 추가 쉐이더 타입은 파티클 쉐이더 중 하나로 ( Moblie / Particle / Addictive )
+
+7. 새로운 파티클 생성. 입자 설정은 원하는대로, 렌더러 재질은 4번에서 만든것으로.  
+
+>### 4. 텍스트를 파티클로 만들기.
+
+[Tutorial Video :][TextParticleTutorial]
+[by Liloe][Liloe]
+
+1. Otho 그래픽 카메라를 추가 
+
+2. 캔버스에 > 패널 > 텍스트 를 추가.
+
+3. 패널은 검정색 알파값은 1.0f, 텍스트는 흰색, 크기는 패널에 맞게 
+
+4. Render Texture 를 카메라에 추가.
+
+5. Screen Space - Camera 에 Otho 카메라 추가
+
+6. 3번 에서 만든 텍스쳐를 새로운 머터리얼에 추가 쉐이더 타입은 파티클 쉐이더 중 하나로 ( Moblie / Particle / Addictive )
+
+7. 새로운 파티클 생성. 입자 설정은 원하는대로, 렌더러 재질은 4번에서 만든것으로. 
+
+[UNITY_Rotation_Over_Lifetime]:(https://docs.unity3d.com/Manual/PartSysRotOverLifeModule.html)
+
+[SmartPing]:(http://www.inven.co.kr/board/lol/2778/13621)
+
+[TextParticleTutorial]:(https://www.youtube.com/watch?v=E2AA-EgjbIw&feature=youtu.be)
+
+[Liloe]:(https://answers.unity.com/users/415507/liloe.html)
+>## 내일 할일 
+
+>### 작업중인 씬 => InGame.scene
+
+1. 마우스 핑 풀링 적용하기. 
+
+2. 스마트 핑 풀링 재활용 가능하게 수정하기.  (지금은 생성한만큼 쓰고 다시 만들어버람)
+
+1. 마우스 클릭 FX 좌표 고치기 (A*타겟과 같은 코드인데, 합쳐도 될듯?)
+
+
+>### 보류중 => Login.cs
+1. MMO UI 에서 추가 적용할 수 있는 것은 제일 마지막에 시간나면 적용.
 
