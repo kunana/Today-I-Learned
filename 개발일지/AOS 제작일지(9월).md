@@ -819,3 +819,176 @@ __리그오브 레전드 스마트핑 기능__
 >### 보류중 => Login.cs
 1. MMO UI 에서 추가 적용할 수 있는 것은 제일 마지막에 시간나면 적용.
 
+
+<br>
+
+># 9월 21일자
+
+> ## 오늘 했던 작업 -> InGame.Scene
+<br>
+
+>1. ### 미니맵 풀링 분리 및 수정 완료. 
+사용 후 리스트에서 삭제하지않고 재활용 하도록 만듬.
+
+>2. ### 마우스 Fx풀링 스크립트 분리 및 수정 완료 
+ &nbsp;&nbsp;&nbsp;&nbsp;파티클이 아니라 머터리얼로 FX를 만드는 스크립트 였다. 
+ 풀링 후 재활용 하는 부분에서 활성화가 안되어서 살펴보니, 
+ ``실질적인 FX부분인 자식 오브젝트 의 스크립트가 활성화 되지 않고 삭제``되도록 해서, 부모 스크립트에서 인스펙터 상으로 직접 연결 해주고, 자식 오브젝트의 FX 타이머를 리셋 시켜줌 .
+
+>3. ### 미니맵 오른쪽 클릭시 A* 안 움직이는 부분 버그 수정 완료
+
+
+>원인 1. 
+
+스크립트 수정중에, 스크립트가 덮어 씌워 져서 레이캐스트 좌표가 아니라, 
+
+라인 렌더러에 쓰는 좌표가 들어가서 안되던것.
+
+>원인 2. [Unity : EventSystem.IsPointerOverGameObject]
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;A* Target 오브젝트를 움직이는 스크립트에서 
+무조건 오른쪽 클릭을 하면 해당 레이캐스트가 맞은 위치로 이동하게 되어있었다.
+
+
+``UI를 클릭해도 같이 실행 하게 되어서, 좌표가 바로 덮어 씌어지는 것이 원인.``
+
+UI 를 포인팅 하는지 확인해 주는 bool값을 만들어 주었다. 
+
+```csharp
+//EventSystem 을 받는 캔버스 만 해당
+//아래 처럼 참조시, 모든 스크립트를 받아와야함. 다른 대안 생각해볼것.
+EventSystem.current.IsPointerOverGameObject();
+//나머지 스크립트 그대로 추가할것.
+```
+>3. ### 미니맵 사각형 마크 위치 수정 완료
+![](2018-09-21-21-43-08.png)
+
+ 
+[Unity : EventSystem.IsPointerOverGameObject]:(https://docs.unity3d.com/ScriptReference/EventSystems.EventSystem.IsPointerOverGameObject.html)
+
+위 사각형 마크가 메인카메라의 자식으로 설정되어서 따라 다니게 되어있다. 초기 설정할때, 쿼터뷰  카메라의 X축 Rotation 값이 70 으로 설정하였고, 카메라 Follow 를 시작 할때, 플레이어 오브젝트 보다 위쪽을 비추고 있어서 타겟팅 좌표 Z 를 +15도로 설정하였고, 당연하게도 미니맵 마크 또한 Y 축을 16 도 정도로 맞추어야 카메라 Follow 시에 정중앙으로 맞출수 있었음. 
+
+``즉, 쿼터뷰 카메라라서 Follow를 손으로 조정해서 생긴 문제``
+
+그래서 카메라 Follow 할때와 안할때 미니맵 마크 좌표를 수정해줌
+```csharp
+//물론 더 좋은 방법이 있을꺼고.. 카메라 각도 수정하면 다시 맞추어야되고......
+
+//일단 카메라 Follow 하지않을때는 
+Transform.localPosition = Vector3.zero;
+
+//카메라 Follow 할때는 맞추어놓은 좌표로 수정.]
+Transform.localPostion = (Vector3)adjust;
+```
+>4. ### 서버 부분 머징 완료
+
+머징후 빌드 했을때 오류 났던 부분
+>1. UnityEidtor 관련 함수는 빌드시 사용하면 빌드 에러가 남. 
+```csharp
+// 만약 게임내에 지장이 없는 코드라면 해당 라인 위아래를 
+#if UNITY_EIDTOR 
+//해당 코드 라인 
+#endif 
+//로 막아줘야함.
+//→ HierachyHighlight.cs 클래스를 통째로 막자
+```
+
+>2. KTYOption
+```csharp
+SaveFilePath가 public이라 빌드하면 인스펙터에서 불러져서 null값이 아님.
+여기서만 쓰면 private 걸자
+2-1. 해상도 1920 1080 windowsMode 1일때 true로 바꾸기
+마찬가지로 json파일 StreamingAssets으로 -> 빌드 사용할때 외부참조 파일들.
+```
+
+>3. SkillClass 못읽음 & ShopItem.readItem() 오류
+```csharp
+csv파일 streamingAssets 폴더에 저장하고
+Read경로 Application.streamingAssetsPath로 바꿔서실행
+
+마찬가지로 Application.dataPath-> Application.streamingAssetsPath
+```
+
+>5. 미니언풀링
+```csharp
+Photonnetwork.instantiate 할때 Resources 폴더 안에 있어야함
+경로를 "Minion/" + minion.name 으로 설정했었음.
+```
+
+> 6. MinionObjectPool에서 MakeList(풀생성)
+```
+생성 시 masterClient만 Network상에서 생성하고 raiseEvent 쏴줘서 타 클라이언트의 미니언 오브젝트 세팅은 포톤뷰 넣기
+```
+> 7. 미니언 스폰도 masterclient만 코루틴시작함(wave)
+```
+나머지는 master의 wave 코루틴에서 spawn할때 메세지받아서 같이 스폰.
+스포너에도 포톤뷰 넣어야함.
+
+스폰 중 master가 나가버리면 이어받은 master가 이어서 스폰해줘야하므로
+코루틴을 변경해야함. 1번 근접 2번 근접 3 원 4 원 5원 이런식으로 바꿔서 3번부터 하라 이런식으로 보내줘야함
+```
+
+> 8. 미니언 이동 연동하기위해 WayPoints 태그 만듬.
+```
+미니언 A* 의 목표 위치가 똑같은데 타클라이언트 에서는 목표로 가기 위한 WayPoint가 다름.
+
+아직 원인 찾지 못해서, WayPoint를 쪼개서 Master클라이언트와 동기화.
+```
+``→ 직접 짠 코드가 아니고, 코드를 보지 못해서 모르겠지만, 보내는 과정에서 손실이 일어나는 것일까?``
+
+> 9. __CRITICAL!!__ 챔프선택 씬에서 InGame넘어올때, 씬 계속 불러옴
+
+[참고]
+
+챔피언 선택 완료후, 타이머가 0초일때, 씬을 계속 불러와서 유니티가 멈춤.
+
+빌드시 에는 마스터 클라이언트만 버그.
+
+디버그 때는 싱글 클라이언트에서도 나왔던 버그. 
+
+```csharp
+//위코드는 Update 에 있음.
+if(timer <= 0)
+PhotonNetWork.LoadLevelAsync("InGame");
+```
+``위 코드를 실행시 현재 씬에서 넘어가지 않고 씬을 백그라운드에서 로드함``
+
+이 코드를 실행하면 메세지 Queue는 잠시 멈춰짐. 그러면 다른 클라이언트는 한번 받았으니까 한번만 실행.
+
+하지만 마스터 클라이언트는?
+
+코드 실행. 백그라운드에서 다음 레벨을 로드함. 물론 Update니까 로드가 다 될때까지 저 코드는 계속 불러지고, 씬이 바뀌어도 백그라운드 니까 계속 씬이 로드됨. 
+
+[참고]:(https://forum.photonengine.com/discussion/12055/loadlevel-or-loadlevelasync)
+> ## 버그
+
+
+> ## 노트
+
+담주 (목)까지 추석 휴무. 책보자.
+
+컴터공학. 석사. 피시게임의 대형화. AR. 오픈CV 광고. 매핑. 비투비.
+
+>## 내일 할일 
+
+```csharp
+/////////////////////////////추가 수정해야할 사항
+
+1. 상점열고 상점클릭하는데 캐릭터 무빙해버림 
+3. 옵션 동작 확인버튼 누르면 되는게 아니라 다시 '화면'버튼을 눌러야됨..
+5. 스킬 Tooltip 에 사용 단축키 표시 부분 업데이트 안되는것 수정할것
+4. Login 부분 날라가버린 마우스 커서 스크립트 추가 할것
+5. UI안 쓰는 기본 생성 핑 만들기. 
+```
+>### 작업중인 씬 => InGame.scene
+
+1. 마우스핑 갑니다 일때, 현재 챔프 위치에서 핑위치 까지 선 그려주기
+
+2. 일반 핑 만들기
+
+3. V키 눌렀을때, 위험 핑 생성하도록. 현 V키는 카메라 Follow가 가짐
+
+4. 인게임 챔피언 생성. 이동 (서버)
+>### 보류중 => Login.cs
+1. MMO UI 에서 추가 적용할 수 있는 것은 제일 마지막에 시간나면 적용 -> 호동씨가 작업
