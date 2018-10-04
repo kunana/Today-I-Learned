@@ -44,8 +44,90 @@ PlayerObj 오브젝트 활성화시, RVO 컴포넌트가 없어서 오류.
 
 >## 내일 할일 
 
-```csharp
-
 >### 작업중인 씬 => InGame.scene
 
 1. 각 클라이언트 마다 챔피언 생성 후 이동 동기화
+
+<br>
+
+># 10월 4일자
+
+> ## 오늘 했던 작업 -> TestScene.Scene
+<br>
+
+> 1. 선택한 챔피언 각 팀마다 생성 완료
+
+> 2. 팀에 따라 시야 다르게 보이게 설정중 (플레이어아이콘, 메쉬 보이는 버그 발견)
+
+<br>
+
+> ## 버그
+
+>1. 팀 Blue 선택시 생성 안됨
+
+__원인__
+1. 서버 접속 버튼을 눌렀을때, 로컬 플레이어가 선택한 팀을 확인하여 각 팀 본진 위치에 챔피언 오브젝트가 생성됨. 
+
+2. 같은 팀일때 생성되나, 다른 팀이면 생성 되지 않음. 
+
+3. 호출 스택을 확인. PhotonNetWork.Instanciate() 내부 코드 에서 EventCode 가 0 이 아니면 Return 해주는 것을 확인
+
+4. 내가 짠 코드는 생성 버튼 눌렀을때, 각 팀에 맞게 이벤트 코드를 구독 해주는데, <br>
+0번 이벤트 코드는 Default 코드로 BroadeCasting 하는 것인데,  
+SetInterestGroup() 을 하면 Defalut 와 특정 이벤트 코드를 동시 구독 하는 건줄 알았음.
+
+
+```csharp
+if(PhotonNetwork.Player.GetTeam().Tostring().Equal("red"))
+{   
+    Float TeamCode = 10;
+    PhotonNetwork.SetInterestGroup(TeamCode) 
+    MakeChampionOBJ(TeamPos);
+}
+```
+__해결__
+
+1. SetInterestGroup() 주석처리.
+
+이후에 브로드캐스팅과 팀별 이벤트 코드가 동시구독이 필요하니, 찾아봐야할듯.
+
+<br>
+
+> 2. 2인 이상 챔피언 오브젝트 생성후 인게임 씬 전환시 땅속 깊이 박히는 문제.
+
+__원인__
+
+1. 콜라이더 + 리지드 바디(Gravity)를 가진 오브젝트가 같은 위치에 생성됨
+
+2. 씬이 넘어갈때 순차적으로 공중에서 떨어짐.
+
+3. 순차적으로 떨어지다 보니 튕겨서 날아감
+
+__해결__
+
+1. Rigidbody 속성 중 Kinetic 활성화 상태에서, 원하는 지점 + Vector3(랜덤,높이,랜덤) 생성,
+
+2. 씬 넘어갈때 Kinetic 해제. 
+
+```csharp
+//오브젝트 생성 할때
+//위치값 랜덤 설정, IsKinetic 활성화
+Float Height = 5;
+Float Random = Random.Range(0, 10);
+Vector3 Temp = New Vector3(Random, Height, Random);
+Rigidbody.IsKinetic = true;
+
+//OnLevelwasLoaded
+//생성 되자 마자 오브젝트가 움직이도록.
+Astar_Destination.transform.position = Temp;
+Rigidbody.IsKinetic = false;
+```
+<br>
+
+> ## 노트
+
+>## 내일 할일 
+
+1. 전장의 안개 챔피언 오브젝트& 챔피언 아이콘 안보이게 하기.
+
+2. 씬 로딩 방법 정해서 모든 클라이언트 동시에 넘기거나, 콜백 받아서 동시 시작하도록 하기.
