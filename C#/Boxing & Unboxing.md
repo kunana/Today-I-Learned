@@ -28,8 +28,11 @@ class TestBoxing
 출처: http://kimjh0727.tistory.com/entry/C-Boxing과-Unboxing의-고찰 [Open-Closed Principle]
 ```
 
+<<<<<<< HEAD
 =======
 
+>>>>>>> 2b952baf684bc16ecc4367c8a40968659db5a7d5
+=======
 >>>>>>> 2b952baf684bc16ecc4367c8a40968659db5a7d5
 object 형태의 리스트 에서 int 형 변수를 넣으면 ``AutoBoxing`` 이 되어서 object 형태로 형변환이 됨.
 
