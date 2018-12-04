@@ -312,12 +312,12 @@ foreach(student in queryStudent)
 >## 데이터 변환을 수행하지 않는 LINQ to Objects
 
 > #####  출처 https://docs.microsoft.com/ko-kr/dotnet/csharp/programming-guide/concepts/linq/type-relationships-in-linq-query-operations
-![](2018-08-15-21-59-36.png)
+![](/img/2018-08-15-21-59-36.png)
 
  >## 소스 데이터를 변환하는 쿼리
 
 
-![](![](2018-08-15-22-37-13.png).png)
+![](![](/img/2018-08-15-22-37-13.png).png)
 
 ##### 출처 및 참고 (http://taeyo.net/Columns/View.aspx?SEQ=207&PSEQ=31&IDX=3)
 #####  출처 및 참고 (http://blog.eairship.kr/262?category=442691)
