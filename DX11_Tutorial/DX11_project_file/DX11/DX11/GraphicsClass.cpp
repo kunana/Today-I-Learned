@@ -1,6 +1,7 @@
 #include "stdafx.h"
-#include "d3dclass.h"
-#include "graphicsclass.h"
+#include "D3DClass.h"
+#include "GraphicsClass.h"
+
 
 GraphicsClass::GraphicsClass()
 {
@@ -31,7 +32,6 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		MessageBox(hwnd, L"Could not initialize Direct3D.", L"Error", MB_OK);
 		return false;
 	}
-	
 
 	return true;
 }

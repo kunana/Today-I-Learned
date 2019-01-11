@@ -21,7 +21,7 @@ public:
 	void GetOrthoMatrix(XMMATRIX&);
 
 	void GetVideoCardInfo(char*, int&);
-	
+
 
 private:
 	bool m_vsync_enabled = false;

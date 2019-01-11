@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "d3dclass.h"
+#include "D3DClass.h"
 
 
 D3DClass::D3DClass()
@@ -68,7 +68,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	// 적합한 것을 찾으면 모니터의 새로고침 비율의 분모와 분자 값을 저장합니다.
 	unsigned int numerator = 0;
 	unsigned int denominator = 0;
-	for (unsigned int i = 0; i<numModes; i++)
+	for (unsigned int i = 0; i < numModes; i++)
 	{
 		if (displayModeList[i].Width == (unsigned int)screenWidth)
 		{

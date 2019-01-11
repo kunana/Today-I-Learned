@@ -1,8 +1,10 @@
-﻿// Dx11Demo_02.cpp: 응용 프로그램의 진입점을 정의합니다.
+﻿// Dx11Demo_03.cpp: 응용 프로그램의 진입점을 정의합니다.
 //
 
 #include "stdafx.h"
 #include "SystemClass.h"
+
+
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -21,6 +23,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	{
 		System->Run();
 	}
+
+
 
 	// System 객체 종료 및 메모리 반환
 	System->Shutdown();
