@@ -24,6 +24,7 @@
     <ClCompile Include="..\..\..\..\Desktop\Dx11Demo_02\InputClass.cpp" />
     <ClCompile Include="..\..\..\..\Desktop\Dx11Demo_02\stdafx.cpp" />
     <ClCompile Include="..\..\..\..\Desktop\Dx11Demo_02\SystemClass.cpp" />
+    <ClCompile Include="D3DClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Desktop\Dx11Demo_02\DxDefine.h" />
@@ -32,6 +33,7 @@
     <ClInclude Include="..\..\..\..\Desktop\Dx11Demo_02\stdafx.h" />
     <ClInclude Include="..\..\..\..\Desktop\Dx11Demo_02\SystemClass.h" />
     <ClInclude Include="..\..\..\..\Desktop\Dx11Demo_02\targetver.h" />
+    <ClInclude Include="D3DClass.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

@@ -30,6 +30,9 @@
     <ClCompile Include="..\..\..\..\Desktop\Dx11Demo_02\SystemClass.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="D3DClass.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Desktop\Dx11Demo_02\DxDefine.h">
@@ -48,6 +51,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Desktop\Dx11Demo_02\targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="D3DClass.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
