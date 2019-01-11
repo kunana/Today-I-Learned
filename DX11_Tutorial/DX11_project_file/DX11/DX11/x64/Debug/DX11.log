@@ -1,2 +1,3 @@
-﻿  InputClass.cpp
-  DX11.vcxproj -> C:\Users\BGA07\Desktop\김근우\새 폴더\Today-I-Learned\DX11_Tutorial\DX11_project_file\DX11\x64\Debug\DX11.exe
+﻿FXC : error X3501: 'main': entrypoint not found
+  
+  compilation failed; no code produced

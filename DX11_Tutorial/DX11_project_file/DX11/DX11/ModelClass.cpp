@@ -1,0 +1,108 @@
+#include "stdafx.h"
+#include "ModelClass.h"
+
+ModelClass::ModelClass()
+{
+}
+
+ModelClass::ModelClass(const ModelClass &)
+{
+}
+
+ModelClass::~ModelClass()
+{
+}
+
+bool ModelClass::initialize(ID3D11Device * device)
+{	
+	//정점 및 인덱스 버퍼를 초기화합니다
+	return initializeBuffer(device);
+}
+
+void ModelClass::shutDown()
+{
+	//버텍스 및 인덱스 버퍼를 종료합니다.
+	shutdownBuffers();
+}
+
+void ModelClass::render(ID3D11DeviceContext * deviceContext)
+{
+	//그리기를 준비하기 위해 그래픽 파이프 라인에 꼭지점과 인덱스 버퍼를 놓습니다.
+	renderbuffers(deviceContext);
+}
+
+int ModelClass::getIndexCount()
+{	
+	return m_indexCount;
+}
+
+bool ModelClass::initializeBuffer(ID3D11Device * device)
+{
+	//정점 배열의 정점 수를 설정합니다.
+	m_vertexCount = 3;
+
+	//인덱스 배열의 인덱스 수를 설정합니다.
+	m_indexCount = 3;
+
+	//정점 배열을 만듭니다.
+	VertexType* vertices = new VertexType[m_vertexCount];
+	if (!vertices)
+	{
+		return false;
+	}
+
+	//인덱스 배열을 만듭니다.
+	unsigned long* indices = new unsigned long[m_indexCount];
+
+	//정점 배열에 데이터를 설정합니다.
+	vertices[0].position = XMFLOAT3(-1.0f, -1.0f, 0.0f);
+	vertices[0].color = XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f);
+
+	vertices[1].position = XMFLOAT3(0.0f, 1.0f, 0.0f);
+	vertices[1].color = XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f);
+	
+	vertices[2].position = XMFLOAT3(1.0f, -1.0f, 0.0f);
+	vertices[2].color = XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f);
+
+	//인덱스 배열의 값을 설정합니다.
+	indices[0] = 0;
+	indices[1] = 1;
+	indices[2] = 2;
+
+	//정적 정점 버퍼의 구조체를 설정합니다.
+	D3D11_BUFFER_DESC vertexBufferDesc;
+	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	vertexBufferDesc.ByteWidth = sizeof(unsigned long) * m_indexCount;
+	vertexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	vertexBufferDesc.CPUAccessFlags = 0;
+	vertexBufferDesc.MiscFlags = 0;
+	vertexBufferDesc.StructureByteStride = 0;
+	
+	//subresource 구조에 정점 데이터에 대한 포인터를 제공합니다.
+	D3D11_SUBRESOURCE_DATA verexData;
+	verexData.pSysMem = vertices;
+	verexData.SysMemPitch = 0;
+	verexData.SysMemSlicePitch = 0;
+
+	//이제 정점 버퍼를 만듭니다.
+	if (FAILED(device->CreateBuffer(&vertexBufferDesc, &verexData, &m_vertexBuffer)))
+	{
+		return false;
+	}
+
+	//정점 인덱스 버퍼의 구조체를 설정합니다.
+	D3D11_BUFFER_DESC indexBufferDesc;
+
+
+
+
+	return true;
+}
+
+void ModelClass::shutdownBuffers()
+{
+}
+
+void ModelClass::renderbuffers(ID3D11DeviceContext * deviceContext)
+{
+}
