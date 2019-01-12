@@ -92,17 +92,62 @@ bool ModelClass::initializeBuffer(ID3D11Device * device)
 
 	//정점 인덱스 버퍼의 구조체를 설정합니다.
 	D3D11_BUFFER_DESC indexBufferDesc;
+	indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	indexBufferDesc.ByteWidth = sizeof(unsigned long) * m_indexCount;
+	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	indexBufferDesc.CPUAccessFlags = 0;
+	indexBufferDesc.MiscFlags = 0;
+	indexBufferDesc.StructureByteStride = 0;
 
+	//인덱스 데이터를 가리키는 보조 리소스 구조체를 작성합니다.
+	D3D11_SUBRESOURCE_DATA indexData;
+	indexData.pSysMem = indices;
+	indexData.SysMemPitch = 0;
+	indexData.SysMemSlicePitch = 0;
 
+	//인덱스 버퍼를 생성합니다.
+	if(FAILED(device->CreateBuffer(&indexBufferDesc, &indexData, &m_indexBuffer)));
+	{
+		return false;
+	}
 
+	//생성되고 값이 할당된 정점 버퍼와 인덱스 버퍼를 해제합니다.
+	delete[] vertices;
+	vertices = 0;
+
+	delete[] indices;
+	indices = 0;
 
 	return true;
 }
 
 void ModelClass::shutdownBuffers()
-{
+{	 
+	//인덱스 버퍼를 해제합니다.
+	if (m_indexBuffer)
+	{
+		m_indexBuffer->Release();
+		m_indexBuffer = 0;
+	}
+
+	//정점 버퍼를 해제합니다.
+	if (m_vertexBuffer)
+	{
+		m_vertexBuffer->Release();
+		m_vertexBuffer = 0;
+	}
 }
 
 void ModelClass::renderbuffers(ID3D11DeviceContext * deviceContext)
 {
+	//정점 버퍼의 단위와 오프셋을 설정합니다.
+	unsigned int stride = sizeof(VertexType);
+	unsigned int offset = 0;
+
+	//렌더링 할 수 있도록 입력 어셈블러에서 정점 버퍼를 활성으로 설정합니다.
+	deviceContext->IASetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
+
+	deviceContext->IASetIndexBuffer(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
+
+	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
