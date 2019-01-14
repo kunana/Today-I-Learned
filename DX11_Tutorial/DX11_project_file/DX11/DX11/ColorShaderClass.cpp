@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "ColorShaderClass.h"
 
-
 ColorShaderClass::ColorShaderClass()
 {
 }
@@ -17,7 +16,7 @@ ColorShaderClass::~ColorShaderClass()
 bool ColorShaderClass::initialize(ID3D11Device* device, HWND hwnd)
 {	
 	// 정점 및 픽셀쉐이더를 초기화 합니다.
-	return initializeShader(device, hwnd, L"../DX11/Color.vs", L"../DX11/Color.ps");
+	return initializeShader(device, hwnd, L"../DX11/color.vs", L"../DX11/color.ps");
 }
 
 void ColorShaderClass::shutDown()
@@ -29,7 +28,7 @@ void ColorShaderClass::shutDown()
 bool ColorShaderClass::render(ID3D11DeviceContext * deviceContext, int indexCount, XMMATRIX worldMat, XMMATRIX viewMat, XMMATRIX projectionMat)
 {
 	//렌더링에 사용할 쉐이더 매개변수를 설정합니다.
-	if(!setShaderParameters(deviceContext, worldMat, viewMat, projectionMat));
+	if(!setShaderParameters(deviceContext, worldMat, viewMat, projectionMat))
 	{
 		return false;
 	}
@@ -39,7 +38,7 @@ bool ColorShaderClass::render(ID3D11DeviceContext * deviceContext, int indexCoun
 	return true;
 }
 
-bool ColorShaderClass::initializeShader(ID3D11Device * device, HWND hwnd, const WCHAR* vsFileName, const WCHAR* psFileName)
+bool ColorShaderClass::initializeShader(ID3D11Device * device, HWND hwnd, WCHAR* vsFileName, WCHAR* psFileName)
 {
 	ID3D10Blob* errorMessage = nullptr;
 
@@ -168,7 +167,7 @@ void ColorShaderClass::shutdownShader()
 
 }
 
-void ColorShaderClass::outputShaderErrorMessage(ID3D10Blob * errorMessage, HWND hwnd, const WCHAR * shaderFileName)
+void ColorShaderClass::outputShaderErrorMessage(ID3D10Blob * errorMessage, HWND hwnd, WCHAR * shaderFileName)
 {	
 	//에러 메시지를 출력창에 표시합니다.
 	OutputDebugStringA(reinterpret_cast<const char*>(errorMessage->GetBufferPointer()));

@@ -5,7 +5,7 @@ ModelClass::ModelClass()
 {
 }
 
-ModelClass::ModelClass(const ModelClass &)
+ModelClass::ModelClass(const ModelClass &other)
 {
 }
 
@@ -106,7 +106,7 @@ bool ModelClass::initializeBuffer(ID3D11Device * device)
 	indexData.SysMemSlicePitch = 0;
 
 	//인덱스 버퍼를 생성합니다.
-	if(FAILED(device->CreateBuffer(&indexBufferDesc, &indexData, &m_indexBuffer)));
+	if(FAILED(device->CreateBuffer(&indexBufferDesc, &indexData, &m_indexBuffer)))
 	{
 		return false;
 	}

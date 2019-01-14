@@ -1,5 +1,10 @@
+////////////////////////////////////////////////////////////////////////////////
+// Filename: color.vs
+////////////////////////////////////////////////////////////////////////////////
+
+
 /////////////
-//  Global //
+// GLOBALS //
 /////////////
 cbuffer MatrixBuffer
 {
@@ -9,39 +14,40 @@ cbuffer MatrixBuffer
 };
 
 
-/////////////
-// Typedef //
-/////////////
-
-struct vertexInputType
+//////////////
+// TYPEDEFS //
+//////////////
+struct VertexInputType
 {
-	float4 position : POSITION;
-	float4 color : COLOR;
+    float4 position : POSITION;
+    float4 color : COLOR;
 };
 
-struct pixelInputType
+struct PixelInputType
 {
-	float4 position : SV_POSITION;
-	float4 color : COLOR;
+    float4 position : SV_POSITION;
+    float4 color : COLOR;
 };
 
-//////////////////////////
-// Vertex Shader		//
-//////////////////////////
-pixelInputType colorVertexShader(vertexInputType input)
+
+////////////////////////////////////////////////////////////////////////////////
+// Vertex Shader
+////////////////////////////////////////////////////////////////////////////////
+PixelInputType ColorVertexShader(VertexInputType input)
 {
-	pixelInputType output;
+    PixelInputType output;
+    
 
-	//ÀûÀıÇÑ Çà·Ä °è»êÀ» À§ÇØ À§Ä¡ º¤ÅÍ¸¦ 4´ÜÀ§·Î º¯°æÇÕ´Ï´Ù.
-	input.position.w = 1.0f;
+	// ì ì ˆí•œ í–‰ë ¬ ê³„ì‚°ì„ ìœ„í•´ ìœ„ì¹˜ ë²¡í„°ë¥¼ 4 ë‹¨ìœ„ë¡œ ë³€ê²½í•©ë‹ˆë‹¤.
+    input.position.w = 1.0f;
 
-	//¿ùµå , ºä, Åõ¿µ Çà·Ä¿¡ ´ëÇÑ Á¤Á¡ÀÇ À§Ä¡¸¦ °è»êÇÕ´Ï´Ù.
-	output.position = mul(input.position, worldMatrix);
-	output.position = mul(output.position, viewMatrix);
-	output.position = mul(output.position, projectionMatrix);
-
-	//ÇÈ¼¿ ½¦ÀÌ´õ°¡ »ç¿ëÇÒ ÀÔ·Â »ö»óÀ» ÀúÀåÇÕ´Ï´Ù.
-	output.color = input.color;
-	
-	return output;
+	// ì›”ë“œ, ë·° ë° íˆ¬ì˜ í–‰ë ¬ì— ëŒ€í•œ ì •ì ì˜ ìœ„ì¹˜ë¥¼ â€‹â€‹ê³„ì‚°í•©ë‹ˆë‹¤.
+    output.position = mul(input.position, worldMatrix);
+    output.position = mul(output.position, viewMatrix);
+    output.position = mul(output.position, projectionMatrix);
+    
+	// í”½ì…€ ì‰ì´ë”ê°€ ì‚¬ìš©í•  ì…ë ¥ ìƒ‰ìƒì„ ì €ì¥í•©ë‹ˆë‹¤.
+    output.color = input.color;
+    
+    return output;
 }

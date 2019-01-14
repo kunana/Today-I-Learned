@@ -20,9 +20,9 @@ public:
 	bool render(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMat, XMMATRIX viewMat, XMMATRIX projectionMat);
 
 private:
-	bool initializeShader(ID3D11Device* device, HWND hwnd, const WCHAR* vsFileName, const WCHAR* psFileName);
+	bool initializeShader(ID3D11Device* device, HWND hwnd, WCHAR* vsFileName, WCHAR* psFileName);
 	void shutdownShader();
-	void outputShaderErrorMessage(ID3D10Blob* errorMessage, HWND hwnd, const WCHAR* shaderFileName);
+	void outputShaderErrorMessage(ID3D10Blob* errorMessage, HWND hwnd, WCHAR* shaderFileName);
 
 	bool setShaderParameters(ID3D11DeviceContext* deviceContext, XMMATRIX worldMat, XMMATRIX viewMat, XMMATRIX projectionMat);
 	void renderShader(ID3D11DeviceContext* deviceContext, int indexCount);
