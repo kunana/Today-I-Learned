@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "D3DClass.h"
+#include "d3dclass.h"
 
 
 D3DClass::D3DClass()
@@ -68,7 +68,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	// 적합한 것을 찾으면 모니터의 새로고침 비율의 분모와 분자 값을 저장합니다.
 	unsigned int numerator = 0;
 	unsigned int denominator = 0;
-	for (unsigned int i = 0; i < numModes; i++)
+	for (unsigned int i = 0; i<numModes; i++)
 	{
 		if (displayModeList[i].Width == (unsigned int)screenWidth)
 		{
@@ -306,7 +306,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	m_deviceContext->RSSetViewports(1, &viewport);
 
 	// 투영 행렬을 설정합니다
-	float fieldOfView = 3.141592654f / 4.0f;
+	float fieldOfView = XM_PI / 4.0f;
 	float screenAspect = (float)screenWidth / (float)screenHeight;
 
 	// 3D 렌더링을위한 투영 행렬을 만듭니다
@@ -444,5 +444,3 @@ void D3DClass::GetVideoCardInfo(char* cardName, int& memory)
 	strcpy_s(cardName, 128, m_videoCardDescription);
 	memory = m_videoCardMemory;
 }
-
-

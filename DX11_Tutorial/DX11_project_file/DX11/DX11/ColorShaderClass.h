@@ -3,7 +3,7 @@
 class ColorShaderClass : public AlignedAllocationPolicy<16>
 {
 private:
-	struct matrixBufferType
+	struct MatrixBufferType
 	{
 		XMMATRIX world;
 		XMMATRIX view;
@@ -15,21 +15,21 @@ public:
 	ColorShaderClass(const ColorShaderClass&);
 	~ColorShaderClass();
 
-	bool initialize(ID3D11Device* device, HWND hwnd);
-	void shutDown();
-	bool render(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMat, XMMATRIX viewMat, XMMATRIX projectionMat);
+	bool Initialize(ID3D11Device*, HWND);
+	void Shutdown();
+	bool Render(ID3D11DeviceContext*, int, XMMATRIX, XMMATRIX, XMMATRIX);
 
 private:
-	bool initializeShader(ID3D11Device* device, HWND hwnd, WCHAR* vsFileName, WCHAR* psFileName);
-	void shutdownShader();
-	void outputShaderErrorMessage(ID3D10Blob* errorMessage, HWND hwnd, WCHAR* shaderFileName);
+	bool InitializeShader(ID3D11Device*, HWND, const WCHAR*, const WCHAR*);
+	void ShutdownShader();
+	void OutputShaderErrorMessage(ID3D10Blob*, HWND, const WCHAR*);
 
-	bool setShaderParameters(ID3D11DeviceContext* deviceContext, XMMATRIX worldMat, XMMATRIX viewMat, XMMATRIX projectionMat);
-	void renderShader(ID3D11DeviceContext* deviceContext, int indexCount);
+	bool SetShaderParameters(ID3D11DeviceContext*, XMMATRIX, XMMATRIX, XMMATRIX);
+	void RenderShader(ID3D11DeviceContext*, int);
 
 private:
 	ID3D11VertexShader* m_vertexShader = nullptr;
 	ID3D11PixelShader* m_pixelShader = nullptr;
-	ID3D11InputLayout* m_inputLayout = nullptr;
+	ID3D11InputLayout* m_layout = nullptr;
 	ID3D11Buffer* m_matrixBuffer = nullptr;
 };

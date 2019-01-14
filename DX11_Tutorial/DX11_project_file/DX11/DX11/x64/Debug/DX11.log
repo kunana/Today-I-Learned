@@ -1,5 +1,10 @@
-﻿  ColorShaderClass.cpp
-c:\users\bga07\desktop\김근우\새 폴더\today-i-learned\dx11_tutorial\dx11_project_file\dx11\dx11\colorshaderclass.cpp(19): error C2664: 'bool ColorShaderClass::initializeShader(ID3D11Device *,HWND,WCHAR *,WCHAR *)': 인수 3을(를) 'const wchar_t [17]'에서 'WCHAR *'(으)로 변환할 수 없습니다.
-  c:\users\bga07\desktop\김근우\새 폴더\today-i-learned\dx11_tutorial\dx11_project_file\dx11\dx11\colorshaderclass.cpp(19): note: 문자열 리터럴로부터의 변환은 const 한정자가 손실됩니다(/Zc:strictStrings 참조).
+﻿  Cameraclass.cpp
+  ColorShaderClass.cpp
+  D3DClass.cpp
+  DX11.cpp
+  GraphicsClass.cpp
+  InputClass.cpp
+  ModelClass.cpp
+  SystemClass.cpp
   stdafx.cpp
-  코드를 생성하고 있습니다...
+  DX11.vcxproj -> C:\Users\BGA07\Desktop\김근우\새 폴더\Today-I-Learned\DX11_Tutorial\DX11_project_file\DX11\x64\Debug\DX11.exe

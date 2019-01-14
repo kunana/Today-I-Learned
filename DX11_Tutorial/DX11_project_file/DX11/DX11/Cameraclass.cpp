@@ -1,95 +1,103 @@
-#include "stdafx.h"
-#include "CameraClass.h"
+ï»¿#include "stdafx.h"
+#include "cameraclass.h"
+
 
 CameraClass::CameraClass()
 {
-	m_position = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	m_position = XMFLOAT3(0.0f, 0.0f, 0.0f);;
 	m_rotation = XMFLOAT3(0.0f, 0.0f, 0.0f);
 }
 
-CameraClass::CameraClass(const CameraClass &)
+
+CameraClass::CameraClass(const CameraClass& other)
 {
 }
+
 
 CameraClass::~CameraClass()
 {
 }
 
-void CameraClass::setPosition(float x, float y, float z)
+
+void CameraClass::SetPosition(float x, float y, float z)
 {
 	m_position.x = x;
 	m_position.y = y;
 	m_position.z = z;
 }
 
-void CameraClass::setRotation(float x, float y, float z)
+
+void CameraClass::SetRotation(float x, float y, float z)
 {
 	m_rotation.x = x;
 	m_rotation.y = y;
 	m_rotation.z = z;
 }
 
-XMFLOAT3 CameraClass::getPosition()
+
+XMFLOAT3 CameraClass::GetPosition()
 {
 	return m_position;
 }
 
-XMFLOAT3 CameraClass::getRotation()
+
+XMFLOAT3 CameraClass::GetRotation()
 {
 	return m_rotation;
 }
 
-void CameraClass::render()
+
+void CameraClass::Render()
 {
 	XMFLOAT3 up, position, lookAt;
 	XMVECTOR upVector, positionVector, lookAtVector;
 	float yaw, pitch, roll;
 	XMMATRIX rotationMatrix;
 
-	//À§ÂÊÀ» °¡¸®Å°´Â º¤ÅÍ¸¦ ¼³Á¤
+
+	// ìœ„ìª½ì„ ê°€ë¦¬í‚¤ëŠ” ë²¡í„°ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
 	up.x = 0.0f;
 	up.y = 1.0f;
 	up.z = 0.0f;
 
-	//XMVECTOR ±¸Á¶Ã¼¿¡ ·Îµå
+	// XMVECTOR êµ¬ì¡°ì²´ì— ë¡œë“œí•œë‹¤.
 	upVector = XMLoadFloat3(&up);
 
-	//3D ¿ùµå¿¡¼­ Ä«¸Ş¶óÀÇ À§Ä¡¸¦ ¼³Á¤
+	// 3Dì›”ë“œì—ì„œ ì¹´ë©”ë¼ì˜ ìœ„ì¹˜ë¥¼ â€‹â€‹ì„¤ì •í•©ë‹ˆë‹¤.
 	position = m_position;
 
-	//XMVECTOR ±¸Á¶Ã¼¿¡ ·Îµå
+	// XMVECTOR êµ¬ì¡°ì²´ì— ë¡œë“œí•œë‹¤.
 	positionVector = XMLoadFloat3(&position);
 
-	//±âº»ÀûÀ¸·Î Ä«¸Ş¶ó°¡ Ã£°íÀÖ´Â À§Ä¡¸¦ ¼³Á¤
+	// ê¸°ë³¸ì ìœ¼ë¡œ ì¹´ë©”ë¼ê°€ ì°¾ê³ ìˆëŠ” ìœ„ì¹˜ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
 	lookAt.x = 0.0f;
-	lookAt.y = 1.0f;
-	lookAt.z = 0.0f;
+	lookAt.y = 0.0f;
+	lookAt.z = 1.0f;
 
-	//XMVECTOR ±¸Á¶Ã¼¿¡ ·Îµå
+	// XMVECTOR êµ¬ì¡°ì²´ì— ë¡œë“œí•œë‹¤.
 	lookAtVector = XMLoadFloat3(&lookAt);
 
-	//yaw(YÃà), pitch (X Ãà) ¹× roll (Z Ãà) ÀÇ È¸Àü°ªÀ» ¶óµğ¾È ´ÜÀ§·Î ¼³Á¤ÇÕ´Ï´Ù.
+	// yaw (Y ì¶•), pitch (X ì¶•) ë° roll (Z ì¶•)ì˜ íšŒì „ê°’ì„ ë¼ë””ì•ˆ ë‹¨ìœ„ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
 	pitch = m_rotation.x * 0.0174532925f;
 	yaw = m_rotation.y * 0.0174532925f;
 	roll = m_rotation.z * 0.0174532925f;
 
-	//yaw, pitch, roll °ªÀ» ÅëÇØ È¸ÀüÇà·ÄÀ» ¸¸µì´Ï´Ù.
+	//  yaw, pitch, roll ê°’ì„ í†µí•´ íšŒì „ í–‰ë ¬ì„ ë§Œë“­ë‹ˆë‹¤.
 	rotationMatrix = XMMatrixRotationRollPitchYaw(pitch, yaw, roll);
 
-	//lookAt ¹× up º¤ÅÍ¸¦ È¸Àü Çà·Ä·Î º¯ÇüÇÏ¿© ºä°¡ ¿øÁ¡¿¡¼­ ¿Ã¹Ù¸£°Ô È¸Àü µÇµµ·Ï ÇÕ´Ï´Ù.
+	// lookAt ë° up ë²¡í„°ë¥¼ íšŒì „ í–‰ë ¬ë¡œ ë³€í˜•í•˜ì—¬ ë·°ê°€ ì›ì ì—ì„œ ì˜¬ë°”ë¥´ê²Œ íšŒì „ë˜ë„ë¡ í•©ë‹ˆë‹¤.
 	lookAtVector = XMVector3TransformCoord(lookAtVector, rotationMatrix);
 	upVector = XMVector3TransformCoord(upVector, rotationMatrix);
 
-	// È¸Àü µÈ Ä«¸Ş¶ó¤¿ À§Ä¡¸¦ ºä¾î À§Ä¡·Î º¯È¯ÇÕ´Ï´Ù.
+	// íšŒì „ ëœ ì¹´ë©”ë¼ ìœ„ì¹˜ë¥¼ ë·°ì–´ ìœ„ì¹˜ë¡œ ë³€í™˜í•©ë‹ˆë‹¤.
 	lookAtVector = XMVectorAdd(positionVector, lookAtVector);
 
-	// ¸¶Áö¸·À¸·Î ¼¼ °³ÀÇ ¾÷µ¥ÀÌÆ® µÈ º¤ÅÍ¿¡¼­ ºä Çà·ÄÀ» ¸¸µì´Ï´Ù.
+	// ë§ˆì§€ë§‰ìœ¼ë¡œ ì„¸ ê°œì˜ ì—…ë°ì´íŠ¸ ëœ ë²¡í„°ì—ì„œ ë·° í–‰ë ¬ì„ ë§Œë“­ë‹ˆë‹¤.
 	m_viewMatrix = XMMatrixLookAtLH(positionVector, lookAtVector, upVector);
-
-		
 }
 
-void CameraClass::getViewMatrix(XMMATRIX & viewMat)
+
+void CameraClass::GetViewMatrix(XMMATRIX& viewMatrix)
 {
-	viewMat = m_viewMatrix;
+	viewMatrix = m_viewMatrix;
 }

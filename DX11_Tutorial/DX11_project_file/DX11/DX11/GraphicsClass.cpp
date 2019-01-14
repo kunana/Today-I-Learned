@@ -1,9 +1,9 @@
 #include "stdafx.h"
-#include "D3DClass.h"
-#include "Cameraclass.h"
-#include "ModelClass.h"
-#include "ColorShaderClass.h"
-#include "GraphicsClass.h"
+#include "d3dclass.h"
+#include "cameraclass.h"
+#include "modelclass.h"
+#include "colorshaderclass.h"
+#include "graphicsclass.h"
 
 
 GraphicsClass::GraphicsClass()
@@ -20,51 +20,58 @@ GraphicsClass::~GraphicsClass()
 {
 }
 
+
 bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 {
-	// Direct3D ê°ì²´ ìƒì„±
-	m_Direct3D = (D3DClass*)_aligned_malloc(sizeof(D3DClass), 16);
-	if (!m_Direct3D)
+	// Direct3D °´Ã¼ »ı¼º
+	m_Direct3D = new D3DClass;
+	if(!m_Direct3D)
 	{
 		return false;
 	}
 
-	// Direct3D ê°ì²´ ì´ˆê¸°í™”
-	if (!m_Direct3D->Initialize(screenWidth, screenHeight, VSYNC_ENABLED, hwnd, FULL_SCREEN, SCREEN_DEPTH, SCREEN_NEAR))
+	// Direct3D °´Ã¼ ÃÊ±âÈ­
+	if(!m_Direct3D->Initialize(screenWidth, screenHeight, VSYNC_ENABLED, hwnd, FULL_SCREEN, SCREEN_DEPTH, SCREEN_NEAR))
 	{
 		MessageBox(hwnd, L"Could not initialize Direct3D.", L"Error", MB_OK);
 		return false;
 	}
 
+	// m_Camera °´Ã¼ »ı¼º
 	m_Camera = new CameraClass;
 	if (!m_Camera)
 	{
 		return false;
 	}
 
-	m_Camera->setPosition(0.0f, 0.0f, -5.0f);
+	// Ä«¸Ş¶ó Æ÷Áö¼Ç ¼³Á¤
+	m_Camera->SetPosition(0.0f, 0.0f, -5.0f);
 
-	m_Model = new ModelClass();
-	if(!m_Model)
+	// m_Model °´Ã¼ »ı¼º
+	m_Model = new ModelClass;
+	if (!m_Model)
 	{
 		return false;
 	}
 
-	if (!m_Model->initialize(m_Direct3D->GetDevice()))
+	// m_Model °´Ã¼ ÃÊ±âÈ­
+	if (!m_Model->Initialize(m_Direct3D->GetDevice()))
 	{
-		MessageBox(hwnd, L"Could not initialize the model object", L"Error", MB_OK);
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
 		return false;
 	}
-	
+
+	// m_ColorShader °´Ã¼ »ı¼º
 	m_ColorShader = new ColorShaderClass;
 	if (!m_ColorShader)
 	{
 		return false;
 	}
 
-	if (!m_ColorShader->initialize(m_Direct3D->GetDevice(), hwnd))
+	// m_ColorShader °´Ã¼ ÃÊ±âÈ­
+	if (!m_ColorShader->Initialize(m_Direct3D->GetDevice(), hwnd))
 	{
-		MessageBox(hwnd, L"Could not initialize the color Shader object", L"Error", MB_OK);
+		MessageBox(hwnd, L"Could not initialize the color shader object.", L"Error", MB_OK);
 		return false;
 	}
 
@@ -73,29 +80,32 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
 
 void GraphicsClass::Shutdown()
-{	
+{
+	// m_ColorShader °´Ã¼ ¹İÈ¯
 	if (m_ColorShader)
 	{
-		m_ColorShader->shutDown();
+		m_ColorShader->Shutdown();
 		delete m_ColorShader;
 		m_ColorShader = 0;
 	}
 
+	// m_Model °´Ã¼ ¹İÈ¯
 	if (m_Model)
 	{
-		m_Model->shutDown();
+		m_Model->Shutdown();
 		delete m_Model;
 		m_Model = 0;
 	}
 
+	// m_Camera °´Ã¼ ¹İÈ¯
 	if (m_Camera)
 	{
 		delete m_Camera;
 		m_Camera = 0;
 	}
 
-	// Direct3D ê°ì²´ ë°˜í™˜
-	if (m_Direct3D)
+	// Direct3D °´Ã¼ ¹İÈ¯
+	if(m_Direct3D)
 	{
 		m_Direct3D->Shutdown();
 		delete m_Direct3D;
@@ -106,29 +116,35 @@ void GraphicsClass::Shutdown()
 
 bool GraphicsClass::Frame()
 {
-	// ê·¸ë˜í”½ ëœë”ë§ ì²˜ë¦¬
+	// ±×·¡ÇÈ ·£´õ¸µ Ã³¸®
 	return Render();
 }
 
 
 bool GraphicsClass::Render()
 {
-	// ì”¬ì„ ê·¸ë¦¬ê¸° ìœ„í•´ ë²„í¼ë¥¼ ì§€ì›ë‹ˆë‹¤
-	m_Direct3D->BeginScene(0.9f, 0.9f, 0.3f, 1.0f);
+	// ¾ÀÀ» ±×¸®±â À§ÇØ ¹öÆÛ¸¦ Áö¿ó´Ï´Ù
+	m_Direct3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
 
-	m_Camera->render();
+	// Ä«¸Ş¶óÀÇ À§Ä¡¿¡ µû¶ó ºä Çà·ÄÀ» »ı¼ºÇÕ´Ï´Ù
+	m_Camera->Render();
 
+	// Ä«¸Ş¶ó ¹× d3d °´Ã¼¿¡¼­ ¿ùµå, ºä ¹× Åõ¿µ Çà·ÄÀ» °¡Á®¿É´Ï´Ù
 	XMMATRIX worldMatrix, viewMatrix, projectionMatrix;
 	m_Direct3D->GetWorldMatrix(worldMatrix);
-	m_Camera->getViewMatrix(viewMatrix);
+	m_Camera->GetViewMatrix(viewMatrix);
 	m_Direct3D->GetProjectionMatrix(projectionMatrix);
 
-	if (!m_ColorShader->render(m_Direct3D->GetDeviceContext(), m_Model->getIndexCount(), worldMatrix, viewMatrix, projectionMatrix))
+	// ¸ğµ¨ ¹öÅØ½º¿Í ÀÎµ¦½º ¹öÆÛ¸¦ ±×·¡ÇÈ ÆÄÀÌÇÁ ¶óÀÎ¿¡ ¹èÄ¡ÇÏ¿© µå·ÎÀ×À» ÁØºñÇÕ´Ï´Ù.
+	m_Model->Render(m_Direct3D->GetDeviceContext());
+
+	// »ö»ó ½¦ÀÌ´õ¸¦ »ç¿ëÇÏ¿© ¸ğµ¨À» ·»´õ¸µÇÕ´Ï´Ù.
+	if (!m_ColorShader->Render(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix))
 	{
 		return false;
 	}
 
-	// ë²„í¼ì˜ ë‚´ìš©ì„ í™”ë©´ì— ì¶œë ¥í•©ë‹ˆë‹¤
+	// ¹öÆÛÀÇ ³»¿ëÀ» È­¸é¿¡ Ãâ·ÂÇÕ´Ï´Ù
 	m_Direct3D->EndScene();
 
 	return true;

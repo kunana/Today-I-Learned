@@ -1,20 +1,20 @@
 #pragma once
 
-class CameraClass
+class CameraClass : public AlignedAllocationPolicy<16>
 {
 public:
 	CameraClass();
 	CameraClass(const CameraClass&);
 	~CameraClass();
 
-	void setPosition(float x, float y, float z);
-	void setRotation(float x, float y, float z);
+	void SetPosition(float, float, float);
+	void SetRotation(float, float, float);
 
-	XMFLOAT3 getPosition();
-	XMFLOAT3 getRotation();
-	
-	void render();
-	void getViewMatrix(XMMATRIX& viewMat);
+	XMFLOAT3 GetPosition();
+	XMFLOAT3 GetRotation();
+
+	void Render();
+	void GetViewMatrix(XMMATRIX&);
 
 private:
 	XMFLOAT3 m_position;

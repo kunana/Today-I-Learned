@@ -22,7 +22,6 @@ public:
 
 	void GetVideoCardInfo(char*, int&);
 
-
 private:
 	bool m_vsync_enabled = false;
 	int m_videoCardMemory = 0;

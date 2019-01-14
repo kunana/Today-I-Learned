@@ -1,4 +1,5 @@
 #pragma once
+
 class ModelClass : public AlignedAllocationPolicy<16>
 {
 private:
@@ -13,17 +14,16 @@ public:
 	ModelClass(const ModelClass&);
 	~ModelClass();
 
-	bool initialize(ID3D11Device* device);
-	void shutDown();
-	void render(ID3D11DeviceContext* deviceContext);
+	bool Initialize(ID3D11Device*);
+	void Shutdown();
+	void Render(ID3D11DeviceContext*);
 
-	int getIndexCount();
+	int GetIndexCount();
 
 private:
-	
-	bool initializeBuffer(ID3D11Device* device);
-	void shutdownBuffers();
-	void renderbuffers(ID3D11DeviceContext* deviceContext);
+	bool InitializeBuffers(ID3D11Device*);
+	void ShutdownBuffers();
+	void RenderBuffers(ID3D11DeviceContext*);
 
 private:
 	ID3D11Buffer* m_vertexBuffer = nullptr;
