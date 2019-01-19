@@ -152,7 +152,7 @@ void SystemClass::InitializeWindows(int& screenWidth, int& screenHeight)
 	m_hinstance = GetModuleHandle(NULL);
 
 	// 프로그램 이름을 지정합니다
-	m_applicationName = L"Dx11Demo_04";
+	m_applicationName = L"Dx11Demo_05";
 
 	// windows 클래스를 아래와 같이 설정합니다.
 	WNDCLASSEX wc;

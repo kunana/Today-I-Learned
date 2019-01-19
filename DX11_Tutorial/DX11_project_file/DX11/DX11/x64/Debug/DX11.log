@@ -1,10 +1,7 @@
-﻿  Cameraclass.cpp
-  ColorShaderClass.cpp
-  D3DClass.cpp
-  DX11.cpp
-  GraphicsClass.cpp
-  InputClass.cpp
-  ModelClass.cpp
-  SystemClass.cpp
-  stdafx.cpp
-  DX11.vcxproj -> C:\Users\BGA07\Desktop\김근우\새 폴더\Today-I-Learned\DX11_Tutorial\DX11_project_file\DX11\x64\Debug\DX11.exe
+﻿  GraphicsClass.cpp
+c:\users\bga07\source\repos\dx11\dx11\mylib.h(20): error C2760: 구문 오류: '식별자'은(는) 예기치 않은 토큰입니다. 필요한 토큰은 ';'입니다.
+  c:\users\bga07\source\repos\dx11\dx11\mylib.h(20): note: 이 진단은 컴파일러 생성 함수 'T myLib::conversion_const_WCHAR_Ptr(const WCHAR *)'에서 수행되었습니다.
+  TextureShaderClass.cpp
+c:\users\bga07\source\repos\dx11\dx11\mylib.h(20): error C2760: 구문 오류: '식별자'은(는) 예기치 않은 토큰입니다. 필요한 토큰은 ';'입니다.
+  c:\users\bga07\source\repos\dx11\dx11\mylib.h(20): note: 이 진단은 컴파일러 생성 함수 'T myLib::conversion_const_WCHAR_Ptr(const WCHAR *)'에서 수행되었습니다.
+  코드를 생성하고 있습니다...
