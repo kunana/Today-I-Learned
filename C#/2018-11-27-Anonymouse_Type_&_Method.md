@@ -1,6 +1,12 @@
+---
+title: Anonymouse Type & Method
+date: 2018-11-27
+categories: AOS BGA
+---
+
 # TIL   / 2018-11-27
 
-  # Anonymouse Type & Method < C# >
+# Anonymouse Type & Method < C# >
 >## 무명형식, 무명 메소드
 
 우리는 보통 변수를 만들때 자료형을 선언하고 만들어준다.
