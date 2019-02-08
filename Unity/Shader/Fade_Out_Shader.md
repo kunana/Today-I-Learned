@@ -1,3 +1,14 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [TIL   / 2018 - 08 - 07](#til----2018---08---07)
+  - [Shader](#shader)
+    - [Fade Out Shader](#fade-out-shader)
+    - [알파 쉐이더](#%EC%95%8C%ED%8C%8C-%EC%89%90%EC%9D%B4%EB%8D%94)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # TIL   / 2018 - 08 - 07
   
 ## Shader

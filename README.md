@@ -1,12 +1,16 @@
-# Today I Learned
+# TIL Index
 
+## 복습문서
 
-## 작성 규칙 [참고](https://medium.com/@dldnjswo19/til-%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0-e293a4a2253c)
-- 문서 생성은 [GFM (Github Flavored Markdown)](https://help.github.com/articles/github-flavored-markdown/) 을 사용한다. (확장자 `.md`)
-- 언어나 기술명으로 폴더를 만든다.
-- 파일명은 영어로.
-- 문서생성시 오늘 날짜를 제목으로 하고 오늘 공부 한 내용들을 가볍게 쓰는 문서와 언어나 기술명의 폴더에 저장되는 문서로 구별됩니다
+[복습하기]
 
-## 로컬에서 띄우기
-로컬에서 .md 파일을 작성하여 remote repository에 push 합니다.
-# Kunana.github.io
+## 읽은것들
+
+[코드리뷰1](https://github.com/kunana/Today-I-Learned/blob/master/%EC%9D%BD%EA%B8%B0/2018-10-27-%EC%BD%94%EB%93%9C%EB%A6%AC%EB%B7%B0.md)
+
+[복습하기](https://github.com/kunana/Today-I-Learned/blob/master/%EB%B3%B5%EC%8A%B5%ED%95%98%EA%B8%B0/%EB%B3%B5%EC%8A%B5.md
+)
+
+## 알고리즘
+
+[입력받은대로 출력하기]()

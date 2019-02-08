@@ -1,3 +1,11 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [C++ 에서의 입출력](#c-%EC%97%90%EC%84%9C%EC%9D%98-%EC%9E%85%EC%B6%9C%EB%A0%A5)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # C++ 에서의 입출력
 
 ![](../img/2019-01-06-20-02-36.png)

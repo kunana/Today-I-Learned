@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [B.](#b)
+  - [타이틀](#%ED%83%80%EC%9D%B4%ED%8B%80)
+  - [게임의 목적](#%EA%B2%8C%EC%9E%84%EC%9D%98-%EB%AA%A9%EC%A0%81)
+  - [스펙](#%EC%8A%A4%ED%8E%99)
+  - [소재](#%EC%86%8C%EC%9E%AC)
+    - [걸스패닉](#%EA%B1%B8%EC%8A%A4%ED%8C%A8%EB%8B%89)
+    - [스플래툰](#%EC%8A%A4%ED%94%8C%EB%9E%98%ED%88%B0)
+    - [리스크(보드게임)](#%EB%A6%AC%EC%8A%A4%ED%81%AC%EB%B3%B4%EB%93%9C%EA%B2%8C%EC%9E%84)
+    - [B 1](#b-1)
+    - [B 2](#b-2)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # B.
 
 ## 타이틀

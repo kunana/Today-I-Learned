@@ -1,3 +1,14 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [TIL   / 2018-08-20](#til----2018-08-20)
+- [Mediator Pattern, or Service Locater< C# >](#mediator-pattern-or-service-locater-c-)
+- [Motivation](#motivation)
+    - [이것이 바로 서비스 중개자 패턴의 핵심이다.](#%EC%9D%B4%EA%B2%83%EC%9D%B4-%EB%B0%94%EB%A1%9C-%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%A4%91%EA%B0%9C%EC%9E%90-%ED%8C%A8%ED%84%B4%EC%9D%98-%ED%95%B5%EC%8B%AC%EC%9D%B4%EB%8B%A4)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # TIL   / 2018-08-20
 
   # Mediator Pattern, or Service Locater< C# >

@@ -1,3 +1,13 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [TIL   / 2018-06-01](#til----2018-06-01)
+  - [Boxing & Unboxing < C# >](#boxing--unboxing--c-)
+      - [Boxing](#boxing)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ---
 title: Boxing & Unboxing
 date: 2018-06-01
