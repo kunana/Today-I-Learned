@@ -68,7 +68,7 @@
 
 [Lambda](C#/Lambda_Expression.md)
 
-[LINQ] (https://github.com/kunana/Today-I-Learned/blob/master/C%23/LINQ.md)
+[LINQ](https://github.com/kunana/Today-I-Learned/blob/master/C%23/LINQ.md)
 
 [String_Builder](C#/String_Builder.md)
 
