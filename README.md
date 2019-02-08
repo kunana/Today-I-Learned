@@ -12,7 +12,8 @@
 
 ## 알고리즘
 
-[입력받은대로 출력하기]()
+[입력받은대로 출력하기](https://github.com/kunana/Today-I-Learned/blob/master/Solving%20Algos/%EC%9E%85%EB%A0%A5%EB%B0%9B%EC%9D%80%EB%8C%80%EB%A1%9C%20%EC%B6%9C%EB%A0%A5%ED%95%98%EA%B8%B0.md)
+
 [전치행렬 만들기](SolvingAlgos/transposedmatrix.c)
 
 ## BGAOS개발일지
@@ -45,14 +46,15 @@
 
 [Lambda](C#/Lambda_Expression.md)
 
-[LINQ] (C#/LINQ.md)
+[LINQ] (https://github.com/kunana/Today-I-Learned/blob/master/C%23/LINQ.md)
 
 [String_Builder](C#/String_Builder.md)
 
 ## C++
 
-[전방선언]
-[C++_I/O]
+[전방선언](https://github.com/kunana/Today-I-Learned/blob/master/C%2B%2B/C%2B%2B%EC%9E%85%EC%B6%9C%EB%A0%A5%20%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC.md)
+
+[C++_I/O](https://github.com/kunana/Today-I-Learned/blob/master/C%2B%2B/%EC%A0%84%EB%B0%A9%EC%84%A0%EC%96%B8.md)
 
 ### Modern C++
 1. [Modern_C++](C++/Modern_C++/1.About_C++.md)
@@ -79,11 +81,11 @@
 
 ## Unity
 
-1. [Custom_Unity_Editor]
+1. [Custom_Unity_Editor](https://github.com/kunana/Today-I-Learned/blob/master/Unity/%EC%9C%A0%EB%8B%88%ED%8B%B0%20%EC%97%90%EB%94%94%ED%84%B0%20%EC%BB%A4%EC%8A%A4%ED%85%80.md)
 
-2. [Unity_Question]
+2. [Unity_Question](https://github.com/kunana/Today-I-Learned/blob/master/Unity/%EC%9C%A0%EB%8B%88%ED%8B%B0%20%EC%A7%88%EB%AC%B8.md)
 
-3. [Unity_Optimization]
+3. [Unity_Optimization](https://github.com/kunana/Today-I-Learned/blob/master/Unity/%EC%9C%A0%EB%8B%88%ED%8B%B0%20%EC%B5%9C%EC%A0%81%ED%99%94.md)
 
 4. [Build_Setting](Unity/BuildSetting.md)
 
@@ -148,8 +150,12 @@
 
 ## Lectures & Reading
 
-1. [About_Code_Review_1]
-2. [About_Code_Review_2]
-3. [혼자서_성장하기]
-4. [Game_Math]
-5. [세상을_만드는_글자_코딩]
+1. [About_Code_Review_1](https://github.com/kunana/Today-I-Learned/blob/master/Lectures%26Reading/2018-10-27-%EC%BD%94%EB%93%9C%EB%A6%AC%EB%B7%B0.md)
+
+2. [About_Code_Review_2](https://github.com/kunana/Today-I-Learned/blob/master/Lectures%26Reading/2018-10-27-%EC%BD%94%EB%93%9C%EB%A6%AC%EB%B7%B02.md)
+
+3. [혼자서_성장하기](https://github.com/kunana/Today-I-Learned/blob/master/Lectures%26Reading/2018-10-27-%ED%98%BC%EC%9E%90%EC%84%9C%20%EC%84%B1%EC%9E%A5%ED%95%98%EA%B8%B0.md)
+
+4. [Game_Math](https://github.com/kunana/Today-I-Learned/blob/master/Lectures%26Reading/%EA%B2%8C%EC%9E%84%EC%88%98%ED%95%99(%EC%9E%91%EC%84%B1%EC%A4%91).md)
+
+5. [세상을_만드는_글자_코딩](https://github.com/kunana/Today-I-Learned/blob/master/Lectures%26Reading/%EC%84%B8%EC%83%81%EC%9D%84_%EB%A7%8C%EB%93%9C%EB%8A%94_%EA%B8%80%EC%9E%90_%EC%BD%94%EB%94%A9.md)
