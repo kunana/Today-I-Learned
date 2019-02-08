@@ -4,6 +4,9 @@
 
 - [TIL   / 2018-06-01](#til----2018-06-01)
   - [Unity - Programming Pattern](#unity---programming-pattern)
+- [Model View Contorl Pattern< C# >](#model-view-contorl-pattern-c-)
+    - [Resources.Load](#resourcesload)
+      - [비용을 줄이기 위해선?](#%EB%B9%84%EC%9A%A9%EC%9D%84-%EC%A4%84%EC%9D%B4%EA%B8%B0-%EC%9C%84%ED%95%B4%EC%84%A0)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
