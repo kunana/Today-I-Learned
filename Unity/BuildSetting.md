@@ -3,7 +3,6 @@
 
 
 - [TIL/16-06-01](#til16-06-01)
-  - [Unity](#unity)
     - [안드로이드 빌드세팅](#%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-%EB%B9%8C%EB%93%9C%EC%84%B8%ED%8C%85)
       - [identification 부분](#identification-%EB%B6%80%EB%B6%84)
       - [Publishing Setting 부분](#publishing-setting-%EB%B6%80%EB%B6%84)
@@ -13,6 +12,8 @@
 # TIL/16-06-01
   ## Unity
     ### BuildSetting  < C# >
+
+(추가중)
 
 ### 안드로이드 빌드세팅
 
