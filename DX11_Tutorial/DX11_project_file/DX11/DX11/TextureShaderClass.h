@@ -1,5 +1,7 @@
 #pragma once
 
+class myLib;
+
 class TextureShaderClass : public AlignedAllocationPolicy<16>
 {
 private:

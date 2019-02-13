@@ -25,7 +25,13 @@ GraphicsClass::~GraphicsClass()
 bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 {
 	//扼捞宏矾府 按眉 积己
-	shared_ptr<myLib> m_myLib(new myLib());
+	/*shared_ptr<myLib> m_myLib(new myLib());*/
+
+	m_myLib = new myLib();
+	if (!m_myLib)
+	{
+		return false;
+	}
 
 	// Direct3D 按眉 积己
 	m_Direct3D = new D3DClass;
@@ -57,10 +63,11 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	{
 		return false;
 	}
-
+	_bstr_t conversion((L"../DX11/texture.vs"));
+	char* origin = conversion;
 	// m_Model 按眉 檬扁拳
 	if (!m_Model->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), 
-		m_myLib->conversion_const_WCHAR_Ptr<char*>(L"../DX11/texture.vs")))
+		origin))
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
 		return false;
@@ -115,6 +122,12 @@ void GraphicsClass::Shutdown()
 		m_Direct3D->Shutdown();
 		delete m_Direct3D;
 		m_Direct3D = 0;
+	}
+
+	if (!m_myLib)
+	{
+		delete m_myLib;
+		m_myLib = 0;
 	}
 }
 

@@ -22,8 +22,8 @@ bool TextureShaderClass::Initialize(ID3D11Device* device, HWND hwnd)
 {
 	shared_ptr<myLib> m_myLib(new myLib);
 	// 정점 및 픽셀 쉐이더를 초기화합니다.
-	return InitializeShader(device, hwnd, m_myLib->conversion_const_WCHAR_Ptr<WCHAR*>(L"../DX11/texture.vs"),
-											m_myLib->conversion_const_WCHAR_Ptr<WCHAR*>(L"../DX11/texture.ps"));
+	return InitializeShader(device, hwnd, m_myLib->const_WCHAR_Ptr_WCHAR(L"../DX11/texture.vs"),
+											m_myLib->const_WCHAR_Ptr_WCHAR(L"../DX11/texture.ps"));
 }
 
 

@@ -13,7 +13,7 @@ class D3DClass;
 class CameraClass;
 class ModelClass;
 class TextureShaderClass;
-class MyLib;
+class myLib;
 
 class GraphicsClass
 {
@@ -34,6 +34,6 @@ private:
 	CameraClass* m_Camera = nullptr;
 	ModelClass* m_Model = nullptr;
 	TextureShaderClass* m_TextureShader = nullptr;
-
-	shared_ptr<MyLib> m_myLib;
+	myLib* m_myLib = nullptr;
+	//shared_ptr<myLib> m_myLib;
 };

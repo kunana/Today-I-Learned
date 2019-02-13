@@ -1,3 +1,5 @@
+#pragma once
+
 class myLib
 {
 public:
@@ -5,20 +7,8 @@ public:
 	~myLib();
 	myLib(const myLib&);
 
-	template<typename T>
-	T conversion_const_WCHAR_Ptr(const WCHAR* str);
-	
+	WCHAR* const_WCHAR_Ptr_WCHAR(const WCHAR* str);
+	char* const_WCHAR_Ptr_char_Ptr(const WCHAR* str);
 private:
 
 };
-
-template<typename T>
-inline T myLib::conversion_const_WCHAR_Ptr(const WCHAR * str)
-{
-
-	T result;
-	_bstr_t conversion(str);
-	str = conversion;
-	return result;
-
-}
