@@ -2,9 +2,9 @@
 #include "d3dclass.h"
 #include "cameraclass.h"
 #include "modelclass.h"
-#include "textureshaderclass.h"
+#include "lightclass.h"
+#include "lightshaderclass.h"
 #include "graphicsclass.h"
-#include "myLib.h"
 
 
 GraphicsClass::GraphicsClass()
@@ -24,15 +24,6 @@ GraphicsClass::~GraphicsClass()
 
 bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 {
-	//라이브러리 객체 생성
-	/*shared_ptr<myLib> m_myLib(new myLib());*/
-
-	m_myLib = new myLib();
-	if (!m_myLib)
-	{
-		return false;
-	}
-
 	// Direct3D 객체 생성
 	m_Direct3D = new D3DClass;
 	if(!m_Direct3D)
@@ -55,7 +46,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// 카메라 포지션 설정
-	m_Camera->SetPosition(0.5f, -0.5f, -5.0f);
+	m_Camera->SetPosition(0.0f, 0.0f, -5.0f);
 
 	// m_Model 객체 생성
 	m_Model = new ModelClass;
@@ -63,29 +54,39 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	{
 		return false;
 	}
-	_bstr_t conversion((L"../DX11/texture.vs"));
-	char* origin = conversion;
+	_bstr_t con(L"../DX11/data/seafloor.dds");
+		WCHAR* ver = con;
 	// m_Model 객체 초기화
-	if (!m_Model->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), 
-		origin))
+	if (!m_Model->Initialize(m_Direct3D->GetDevice(),ver ))
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
 		return false;
 	}
 
-	// m_TextureShader 객체 생성
-	m_TextureShader = new TextureShaderClass;
-	if (!m_TextureShader)
+	// m_LightShader 객체 생성
+	m_LightShader = new LightShaderClass;
+	if (!m_LightShader)
 	{
 		return false;
 	}
 
-	// m_TextureShader 객체 초기화
-	if (!m_TextureShader->Initialize(m_Direct3D->GetDevice(), hwnd))
+	// m_LightShader 객체 초기화
+	if (!m_LightShader->Initialize(m_Direct3D->GetDevice(), hwnd))
 	{
- 		MessageBox(hwnd, L"Could not initialize the color shader object.", L"Error", MB_OK);
+		MessageBox(hwnd, L"Could not initialize the light shader object.", L"Error", MB_OK);
 		return false;
 	}
+
+	// m_Light 객체 생성
+	m_Light = new LightClass;
+	if(!m_Light)
+	{
+		return false;
+	}
+
+	// m_Light 객체 초기화
+	m_Light->SetDiffuseColor(0.0f, 1.0f, 0.0f, 0.3f);
+	m_Light->SetDirection(0.0f, 1.0f, 0.2f);
 
 	return true;
 }
@@ -93,12 +94,19 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
 void GraphicsClass::Shutdown()
 {
-	// m_TextureShader 객체 반환
-	if (m_TextureShader)
+	// m_Light 객체 반환
+	if(m_Light)
 	{
-		m_TextureShader->Shutdown();
-		delete m_TextureShader;
-		m_TextureShader = 0;
+		delete m_Light;
+		m_Light = 0;
+	}
+
+	// m_LightShader 객체 반환
+	if (m_LightShader)
+	{
+		m_LightShader->Shutdown();
+		delete m_LightShader;
+		m_LightShader = 0;
 	}
 
 	// m_Model 객체 반환
@@ -123,23 +131,26 @@ void GraphicsClass::Shutdown()
 		delete m_Direct3D;
 		m_Direct3D = 0;
 	}
-
-	if (!m_myLib)
-	{
-		delete m_myLib;
-		m_myLib = 0;
-	}
 }
 
 
 bool GraphicsClass::Frame()
 {
+	static float rotation = 0.0f;
+
+	// 각 프레임의 rotation 변수를 업데이트합니다.
+	rotation += (float)XM_PI * 0.01f;
+	if(rotation > 360.0f)
+	{
+		rotation -= 360.0f;
+	}
+	
 	// 그래픽 랜더링 처리
-	return Render();
+	return Render(rotation);
 }
 
 
-bool GraphicsClass::Render()
+bool GraphicsClass::Render(float rotation)
 {
 	// 씬을 그리기 위해 버퍼를 지웁니다
 	m_Direct3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
@@ -153,11 +164,15 @@ bool GraphicsClass::Render()
 	m_Camera->GetViewMatrix(viewMatrix);
 	m_Direct3D->GetProjectionMatrix(projectionMatrix);
 
+	// 삼각형이 회전 할 수 있도록 회전 값으로 월드 행렬을 회전합니다.
+	worldMatrix = XMMatrixRotationY(rotation);
+
 	// 모델 버텍스와 인덱스 버퍼를 그래픽 파이프 라인에 배치하여 드로잉을 준비합니다.
 	m_Model->Render(m_Direct3D->GetDeviceContext());
 
-	// 텍스쳐 쉐이더를 사용하여 모델을 렌더링합니다.
-	if (!m_TextureShader->Render(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, m_Model->GetTexture()))
+	// Light 쉐이더를 사용하여 모델을 렌더링합니다.
+	if (!m_LightShader->Render(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
+								   m_Model->GetTexture(), m_Light->GetDirection(), m_Light->GetDiffuseColor()))
 	{
 		return false;
 	}

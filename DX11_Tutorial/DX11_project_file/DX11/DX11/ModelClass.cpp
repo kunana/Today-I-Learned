@@ -18,7 +18,7 @@ ModelClass::~ModelClass()
 }
 
 
-bool ModelClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* textureFilename)
+bool ModelClass::Initialize(ID3D11Device* device, WCHAR* textureFilename)
 {
 	// 정점 및 인덱스 버퍼를 초기화합니다.
 	if (!InitializeBuffers(device))
@@ -27,7 +27,7 @@ bool ModelClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceCon
 	}
 
 	// 이 모델의 텍스처를 로드합니다.
-	return LoadTexture(device, deviceContext, textureFilename);
+	return LoadTexture(device, textureFilename);
 }
 
 
@@ -63,10 +63,10 @@ ID3D11ShaderResourceView* ModelClass::GetTexture()
 bool ModelClass::InitializeBuffers(ID3D11Device* device)
 {
 	// 정점 배열의 정점 수를 설정합니다.
-	m_vertexCount = 4;
+	m_vertexCount = 3;
 
 	// 인덱스 배열의 인덱스 수를 설정합니다.
-	m_indexCount = 6;
+	m_indexCount = 3;
 
 	// 정점 배열을 만듭니다.
 	VertexType* vertices = new VertexType[m_vertexCount];
@@ -84,25 +84,18 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
 
 	// 정점 배열에 값을 설정합니다.
 	vertices[0].position = XMFLOAT3(-1.0f, -1.0f, 0.0f);  // Bottom left.
-	vertices[0].texture = XMFLOAT2(0.0f, 3.0f);
+	vertices[0].texture = XMFLOAT2(0.0f, 1.0f);
 
-	vertices[1].position = XMFLOAT3(-1.0f, 1.0f, 0.0f);  // Top middle.
-	vertices[1].texture = XMFLOAT2(0.0f, 0.0f);
+	vertices[1].position = XMFLOAT3(0.0f, 1.0f, 0.0f);  // Top middle.
+	vertices[1].texture = XMFLOAT2(0.5f, 0.0f);
 
-	vertices[2].position = XMFLOAT3(1.0f, 1.0f, 0.0f);  // Bottom right.
-	vertices[2].texture = XMFLOAT2(2.0f, 0.0f);
-
-	vertices[3].position = XMFLOAT3(1.0f, -1.0f, 0.0f);  // Bottom right.
-	vertices[3].texture = XMFLOAT2(2.0f, 3.0f);
+	vertices[2].position = XMFLOAT3(1.0f, -1.0f, 0.0f);  // Bottom right.
+	vertices[2].texture = XMFLOAT2(1.0f, 1.0f);
 
 	// 인덱스 배열에 값을 설정합니다.
 	indices[0] = 0;  // Bottom left.
 	indices[1] = 1;  // Top middle.
 	indices[2] = 2;  // Bottom right.
-
-	indices[3] = 2;
-	indices[4] = 3;
-	indices[5] = 0;
 
 	// 정적 정점 버퍼의 구조체를 설정합니다.
 	D3D11_BUFFER_DESC vertexBufferDesc;
@@ -192,7 +185,7 @@ void ModelClass::RenderBuffers(ID3D11DeviceContext* deviceContext)
 }
 
 
-bool ModelClass::LoadTexture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* filename)
+bool ModelClass::LoadTexture(ID3D11Device* device, WCHAR* filename)
 {
 	// 텍스처 오브젝트를 생성한다.
 	m_Texture = new TextureClass;
@@ -202,7 +195,7 @@ bool ModelClass::LoadTexture(ID3D11Device* device, ID3D11DeviceContext* deviceCo
 	}
 
 	// 텍스처 오브젝트를 초기화한다.
-	return m_Texture->Initialize(device, deviceContext, filename);
+	return m_Texture->Initialize(device, filename);
 }
 
 

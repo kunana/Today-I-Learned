@@ -18,54 +18,13 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="AlignedAllocationPolicy.h" />
-    <ClInclude Include="Cameraclass.h" />
-    <ClInclude Include="ColorShaderClass.h" />
-    <ClInclude Include="D3DClass.h" />
-    <ClInclude Include="DDSTextureLoader.h" />
-    <ClInclude Include="DX11.h" />
-    <ClInclude Include="DxDefine.h" />
-    <ClInclude Include="GraphicsClass.h" />
-    <ClInclude Include="InputClass.h" />
-    <ClInclude Include="LightShaderClass.h" />
-    <ClInclude Include="ModelClass.h" />
-    <ClInclude Include="MyLib.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="SystemClass.h" />
-    <ClInclude Include="targetver.h" />
-    <ClInclude Include="TextureClass.h" />
-    <ClInclude Include="TextureShaderClass.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Cameraclass.cpp" />
-    <ClCompile Include="ColorShaderClass.cpp" />
-    <ClCompile Include="D3DClass.cpp" />
-    <ClCompile Include="DDSTextureLoader.cpp" />
-    <ClCompile Include="DX11.cpp" />
-    <ClCompile Include="GraphicsClass.cpp" />
-    <ClCompile Include="InputClass.cpp" />
-    <ClCompile Include="LightShaderClass.cpp" />
-    <ClCompile Include="ModelClass.cpp" />
-    <ClCompile Include="MyLib.cpp" />
-    <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="SystemClass.cpp" />
-    <ClCompile Include="TextureClass.cpp" />
-    <ClCompile Include="TextureShaderClass.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Light.ps" />
-    <None Include="Light.vs" />
-    <None Include="texture.ps" />
-    <None Include="texture.vs" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{20B9533D-6CDC-4D7E-A87D-657B966E1C75}</ProjectGuid>
+    <ProjectGuid>{A4844063-3104-4341-906B-FB21C48B91EA}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>DX11</RootNamespace>
+    <RootNamespace>Project1</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <ProjectName>Dx11</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -86,6 +45,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <CLRSupport>false</CLRSupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -128,10 +88,8 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -142,7 +100,6 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
@@ -157,7 +114,6 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
@@ -174,7 +130,6 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
@@ -185,6 +140,40 @@
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="AlignedAllocationPolicy.h" />
+    <ClInclude Include="CameraClass.h" />
+    <ClInclude Include="D3DClass.h" />
+    <ClInclude Include="DDSTextureLoader.h" />
+    <ClInclude Include="DxDefine.h" />
+    <ClInclude Include="GraphicsClass.h" />
+    <ClInclude Include="InputClass.h" />
+    <ClInclude Include="LightClass.h" />
+    <ClInclude Include="LightShaderClass.h" />
+    <ClInclude Include="ModelClass.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SystemClass.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="TextureClass.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CameraClass.cpp" />
+    <ClCompile Include="D3DClass.cpp" />
+    <ClCompile Include="DDSTextureLoader.cpp" />
+    <ClCompile Include="DX11.cpp" />
+    <ClCompile Include="GraphicsClass.cpp" />
+    <ClCompile Include="InputClass.cpp" />
+    <ClCompile Include="LightClass.cpp" />
+    <ClCompile Include="LightShaderClass.cpp" />
+    <ClCompile Include="ModelClass.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="SystemClass.cpp" />
+    <ClCompile Include="TextureClass.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="light.ps" />
+    <None Include="light.vs" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

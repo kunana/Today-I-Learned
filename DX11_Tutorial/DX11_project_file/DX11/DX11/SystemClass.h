@@ -1,6 +1,9 @@
 #pragma once
+
+
 class InputClass;
 class GraphicsClass;
+
 
 class SystemClass
 {

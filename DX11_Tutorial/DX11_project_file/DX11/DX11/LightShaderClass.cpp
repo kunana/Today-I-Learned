@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "LightShaderClass.h"
-#include "MyLib.h"
+
 
 LightShaderClass::LightShaderClass()
 {
@@ -19,9 +19,12 @@ LightShaderClass::~LightShaderClass()
 
 bool LightShaderClass::Initialize(ID3D11Device* device, HWND hwnd)
 {
-	myLib* m_myLib = new myLib();
+	_bstr_t con(L"../DX11/light.vs");
+	WCHAR* ver = con;
+	_bstr_t con2(L"../DX11/light.ps");
+	WCHAR* ver2 = con2;
 	// 정점 및 픽셀 쉐이더를 초기화합니다.
-	return InitializeShader(device, hwnd, m_myLib->const_WCHAR_Ptr_WCHAR(L"../Dx11Demo_06/light.vs"), m_myLib->const_WCHAR_Ptr_WCHAR(L"../Dx11Demo_06/light.ps"));
+	return InitializeShader(device, hwnd, ver, ver2);
 }
 
 
@@ -55,8 +58,7 @@ bool LightShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* 
 
 	// 버텍스 쉐이더 코드를 컴파일한다.
 	ID3D10Blob* vertexShaderBuffer = nullptr;
-	result = D3DCompileFromFile(vsFilename, NULL, NULL, "LightVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0,
-		&vertexShaderBuffer, &errorMessage);
+	result = D3DCompileFromFile(vsFilename, NULL, NULL, "LightVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0,	&vertexShaderBuffer, &errorMessage);
 	if (FAILED(result))
 	{
 		// 셰이더 컴파일 실패시 오류메시지를 출력합니다.
@@ -75,8 +77,7 @@ bool LightShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* 
 
 	// 픽셀 쉐이더 코드를 컴파일한다.
 	ID3D10Blob* pixelShaderBuffer = nullptr;
-	result = D3DCompileFromFile(psFilename, NULL, NULL, "LightPixelShader", "ps_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0,
-		&pixelShaderBuffer, &errorMessage);
+	result = D3DCompileFromFile(psFilename, NULL, NULL, "LightPixelShader", "ps_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &pixelShaderBuffer, &errorMessage);
 	if (FAILED(result))
 	{
 		// 셰이더 컴파일 실패시 오류메시지를 출력합니다.
@@ -94,16 +95,14 @@ bool LightShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* 
 	}
 
 	// 버퍼로부터 정점 셰이더를 생성한다.
-	result = device->CreateVertexShader(vertexShaderBuffer->GetBufferPointer(), vertexShaderBuffer->GetBufferSize(), NULL,
-		&m_vertexShader);
+	result = device->CreateVertexShader(vertexShaderBuffer->GetBufferPointer(), vertexShaderBuffer->GetBufferSize(), NULL, &m_vertexShader);
 	if (FAILED(result))
 	{
 		return false;
 	}
 
 	// 버퍼에서 픽셀 쉐이더를 생성합니다.
-	result = device->CreatePixelShader(pixelShaderBuffer->GetBufferPointer(), pixelShaderBuffer->GetBufferSize(), NULL,
-		&m_pixelShader);
+	result = device->CreatePixelShader(pixelShaderBuffer->GetBufferPointer(), pixelShaderBuffer->GetBufferSize(), NULL, &m_pixelShader);
 	if (FAILED(result))
 	{
 		return false;
@@ -205,10 +204,10 @@ bool LightShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* 
 
 	// 이 클래스 내에서 정점 셰이더 상수 버퍼에 액세스 할 수 있도록 상수 버퍼 포인터를 만듭니다.
 	result = device->CreateBuffer(&lightBufferDesc, NULL, &m_lightBuffer);
-	if (FAILED(result))
+	if(FAILED(result))
 	{
 		return false;
-	}
+	}	
 
 	return true;
 }
@@ -217,7 +216,7 @@ bool LightShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* 
 void LightShaderClass::ShutdownShader()
 {
 	// 광원 상수 버퍼를 해제합니다.
-	if (m_lightBuffer)
+	if(m_lightBuffer)
 	{
 		m_lightBuffer->Release();
 		m_lightBuffer = 0;
@@ -310,7 +309,7 @@ bool LightShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceContext, X
 	deviceContext->PSSetShaderResources(0, 1, &texture);
 
 	// light constant buffer를 잠글 수 있도록 기록한다.
-	if (FAILED(deviceContext->Map(m_lightBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource)))
+	if(FAILED(deviceContext->Map(m_lightBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource)))
 	{
 		return false;
 	}
@@ -350,5 +349,3 @@ void LightShaderClass::RenderShader(ID3D11DeviceContext* deviceContext, int inde
 	// 삼각형을 그립니다.
 	deviceContext->DrawIndexed(indexCount, 0, 0);
 }
-
- 

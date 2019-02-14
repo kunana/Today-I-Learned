@@ -1,6 +1,6 @@
 #pragma once
 
-class LightShaderClass : public AlignedAllocationPolicy<16>
+class LightShaderClass
 {
 private:
 	struct MatrixBufferType
@@ -14,7 +14,7 @@ private:
 	{
 		XMFLOAT4 diffuseColor;
 		XMFLOAT3 lightDirection;
-		float padding;  // 구조체가 CreateBuffer 함수 요구 사항에 대해 16의 배수가되도록 여분의 패딩을 추가
+		float padding;  // 구조체가 CreateBuffer 함수 요구 사항에 대해 16의 배수가되도록 여분의 패딩을 추가했습니다.
 	};
 
 public:
@@ -31,8 +31,7 @@ private:
 	void ShutdownShader();
 	void OutputShaderErrorMessage(ID3D10Blob*, HWND, WCHAR*);
 
-	bool SetShaderParameters(ID3D11DeviceContext*, XMMATRIX, XMMATRIX, XMMATRIX, ID3D11ShaderResourceView*, XMFLOAT3,
-		XMFLOAT4);
+	bool SetShaderParameters(ID3D11DeviceContext*, XMMATRIX, XMMATRIX, XMMATRIX, ID3D11ShaderResourceView*, XMFLOAT3, XMFLOAT4);
 	void RenderShader(ID3D11DeviceContext*, int);
 
 private:
@@ -43,4 +42,3 @@ private:
 	ID3D11Buffer* m_matrixBuffer = nullptr;
 	ID3D11Buffer* m_lightBuffer;
 };
- 
