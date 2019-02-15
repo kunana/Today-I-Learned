@@ -170,6 +170,8 @@
 
 5. [3D_Fundimental_LightProbe](https://github.com/kunana/Today-I-Learned/blob/master/DX11_Tutorial/3D_Fundimental-LightProbe.md)
 
+6. [Vector](https://github.com/kunana/Today-I-Learned/blob/master/DX11_Tutorial/2019-02-14-Vector.md)
+
 ## Shader
 
 1. [Fade_Out_Shader](https://github.com/kunana/Today-I-Learned/blob/master/Unity/Shader/Fade_Out_Shader.md)
