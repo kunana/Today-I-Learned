@@ -37,9 +37,9 @@
 
 [입력받은대로 출력하기](https://github.com/kunana/Today-I-Learned/blob/master/Algorithm/%EC%9E%85%EB%A0%A5%EB%B0%9B%EC%9D%80%EB%8C%80%EB%A1%9C%20%EC%B6%9C%EB%A0%A5%ED%95%98%EA%B8%B0.md)
 
-[전치행렬 만들기](Algorithm/transposedmatrix.c)
+[전치행렬 만들기](https://github.com/kunana/Today-I-Learned/blob/master/Algorithm/transposedmatrix.c)
 
-[이진탐색] (Algorithm/2019-02-10-Binary_Searching.md)
+[이진탐색] (https://github.com/kunana/Today-I-Learned/blob/master/Algorithm/2019-02-10-Binary_Searching.md)
 
 
 ## BGAOS개발일지
