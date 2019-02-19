@@ -18,8 +18,13 @@ ModelClass::~ModelClass()
 }
 
 
-bool ModelClass::Initialize(ID3D11Device* device, WCHAR* textureFilename)
+bool ModelClass::Initialize(ID3D11Device* device, char* modelFileName, WCHAR* textureFilename)
 {
+	if (!LoadModel(modelFileName))
+	{
+		return false;
+	}
+
 	// 정점 및 인덱스 버퍼를 초기화합니다.
 	if (!InitializeBuffers(device))
 	{
@@ -38,6 +43,8 @@ void ModelClass::Shutdown()
 
 	// 버텍스 및 인덱스 버퍼를 종료합니다.
 	ShutdownBuffers();
+
+	ReleaseModel();
 }
 
 
@@ -62,11 +69,7 @@ ID3D11ShaderResourceView* ModelClass::GetTexture()
 
 bool ModelClass::InitializeBuffers(ID3D11Device* device)
 {
-	// 정점 배열의 정점 수를 설정합니다.
-	m_vertexCount = 3;
-
-	// 인덱스 배열의 인덱스 수를 설정합니다.
-	m_indexCount = 3;
+	//LoadModel 함수에서 모델을 불러와서 인덱스, 정점수를 가져옴
 
 	// 정점 배열을 만듭니다.
 	VertexType* vertices = new VertexType[m_vertexCount];
@@ -82,20 +85,17 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
 		return false;
 	}
 
-	// 정점 배열에 값을 설정합니다.
-	vertices[0].position = XMFLOAT3(-1.0f, -1.0f, 0.0f);  // Bottom left.
-	vertices[0].texture = XMFLOAT2(0.0f, 1.0f);
+	//데이터에서 정점배열과 인덱스 배열을 불러옵니다
+	//m_model 배열에 있는 정보들을 정점 배열로 복사한다.
+	//인덱스 배열은 불러올때 해당 배열에서의 위치가 곧 인덱스 번호이기 때문에 간단하게 지정할 수있다.
+	for (int i = 0; i < m_vertexCount; i++)
+	{
+		vertices[i].position = XMFLOAT3(m_model[i].x, m_model[i].y, m_model[i].z);
+		vertices[i].texture = XMFLOAT2(m_model[i].tu, m_model[i].tv);
+		vertices[i].normal = XMFLOAT3(m_model[i].nx, m_model[i].ny, m_model[i].nz);
 
-	vertices[1].position = XMFLOAT3(0.0f, 1.0f, 0.0f);  // Top middle.
-	vertices[1].texture = XMFLOAT2(0.5f, 0.0f);
-
-	vertices[2].position = XMFLOAT3(1.0f, -1.0f, 0.0f);  // Bottom right.
-	vertices[2].texture = XMFLOAT2(1.0f, 1.0f);
-
-	// 인덱스 배열에 값을 설정합니다.
-	indices[0] = 0;  // Bottom left.
-	indices[1] = 1;  // Top middle.
-	indices[2] = 2;  // Bottom right.
+		indices[i] = i;
+	}
 
 	// 정적 정점 버퍼의 구조체를 설정합니다.
 	D3D11_BUFFER_DESC vertexBufferDesc;
@@ -208,4 +208,75 @@ void ModelClass::ReleaseTexture()
 		delete m_Texture;
 		m_Texture = 0;
 	}
+}
+
+//텍스트 파일의 모델 데이터를 m_model배열로 로드하는 일은 함
+//파일을 열고 정점 수를 읽은 뒤 ModelType 의 배열을 생성하고 각 라인을 읽어 그값을 배열에 넣는다.
+//이때 정점수와 인덱스 수가 이 함수에서 설정된다.
+bool ModelClass::LoadModel(char * ModelName)
+{	
+	std::fstream fin;
+	char input;
+	int i;
+
+	//모델 파일을 오픈 합니다
+	fin.open(ModelName);
+
+	//만약 열리지 않으면 종료합니다
+	if (fin.fail())
+	{
+		return false;
+	}
+
+	//정점의 갯수가 나올때 까지 파일을 읽습니다
+	fin.get(input);
+	while (input != ':')
+	{
+		fin.get(input);
+	}
+
+	//정점 갯수를 얻어옵니다
+	fin >> m_vertexCount;
+	
+	//인덱스 갯수를 정점 갯수와 같게 설정합니다
+	m_indexCount = m_vertexCount;
+
+	//읽어온 정점 갯수로 모델을 생성합니다
+	m_model = new ModelType[m_vertexCount];
+	if (!m_model)
+	{
+		return false;
+	}
+
+	//데이터의 첫 부분까지 읽습니다
+	fin.get(input);
+	while(input != ':')
+	{
+		fin.get(input);
+	}
+	fin.get(input);
+	fin.get(input);
+
+	//정점 데이터를 읽습니다
+	for (int i = 0; i < m_vertexCount; i++)
+	{
+		fin >> m_model[i].x >> m_model[i].y >> m_model[i].z;
+		fin >> m_model[i].tu >> m_model[i].tv;
+		fin >> m_model[i].nx >> m_model[i].ny >> m_model[i].nz;
+	}
+	
+	//모델 파일을 닫습니다
+	fin.close();
+	return true;
+}
+
+//모델 데이터 배열을 해제합니다
+void ModelClass::ReleaseModel()
+{
+	if (m_model)
+	{
+		delete[] m_model;
+		m_model = 0;
+	}
+	return;
 }

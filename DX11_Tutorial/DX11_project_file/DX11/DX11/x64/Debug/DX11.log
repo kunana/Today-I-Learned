@@ -1,2 +1,1 @@
-﻿  GraphicsClass.cpp
-  DX11.vcxproj -> C:\Users\kwoon\source\repos\DX11\x64\Debug\Dx11.exe
+﻿LINK : fatal error LNK1104: 'C:\Users\kwoon\Documents\Github\Today-I-Learned\DX11_Tutorial\DX11_project_file\DX11\x64\Debug\Dx11.exe' 파일을 열 수 없습니다.
