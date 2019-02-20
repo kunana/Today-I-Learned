@@ -1,1 +1,15 @@
-﻿LINK : fatal error LNK1104: 'C:\Users\kwoon\Documents\Github\Today-I-Learned\DX11_Tutorial\DX11_project_file\DX11\x64\Debug\Dx11.exe' 파일을 열 수 없습니다.
+﻿  CameraClass.cpp
+  D3DClass.cpp
+  DDSTextureLoader.cpp
+  DX11.cpp
+  GraphicsClass.cpp
+  InputClass.cpp
+  LightClass.cpp
+  LightShaderClass.cpp
+  ModelClass.cpp
+c:\users\bga\desktop\today-i-learned\dx11_tutorial\dx11_project_file\dx11\dx11\modelclass.cpp(220): warning C4101: 'i' :참조되지 않은 지역 변수입니다.
+  stdafx.cpp
+  SystemClass.cpp
+  TextureClass.cpp
+  코드를 생성하고 있습니다...
+  DX11.vcxproj -> C:\Users\BGA\Desktop\Today-I-Learned\DX11_Tutorial\DX11_project_file\DX11\x64\Debug\Dx11.exe
